@@ -25,16 +25,31 @@ class ListNode : public Node<Type>
 {
 private:
 	ListNode* previous; //Pointer to previous Node
+	ListNode* next; //Pointer to next Node
 		
 	//Head and tail pointer pointers. Not only for making access to parts of data structure easier, but also for use with representatives and such
-	ListNode** head;//Pointer that will point to a figurative head pointer. This makes accessing this unified for all related ListNodes (NOTE: this can be left for the data structure to handle, but for this example, we will allow elements to have this infor as well) 
-	ListNode** tail;//Pointer that will point to a figurative tail pointer. This makes accessing this unified for all related ListNodes (NOTE: this can be left for the data structure to handle, but for this example, we will allow elements to have this infor as well) 
+	ListNode** head;//Pointer that will point to a figurative head pointer. This makes accessing this unified for all related ListNodes (NOTE: this can be left for the data structure to handle, but for this example, we will allow elements to have this info as well) 
+	ListNode** tail;//Pointer that will point to a figurative tail pointer. This makes accessing this unified for all related ListNodes (NOTE: this can be left for the data structure to handle, but for this example, we will allow elements to have this info as well) 
 
 public:
-	ListNode* getHeadNode(); //returns a pointer to the head node this node belongs to
-	ListNode* getTailNode(); //returns a pointer to the head node this node belongs to
+	ListNode();
+	ListNode(Type newData);
+	
+
+	ListNode** getHeadNode(); //returns a pointer to the head node this node belongs to
+	ListNode** getTailNode(); //returns a pointer to the head node this node belongs to
 
 	ListNode* getNextNode(); //return the next node in the list
 	ListNode* getPreviousNode(); //returns the node previous to this one
+
+	Type getData();
+
+	void setHead(ListNode** newHead);
+	void setTail(ListNode** newTail);
+	void setNextNode(ListNode* newNext);
+	void setPreviousNode(ListNode* newPrevious);
+
+	void setData(Type newData);
+
 };
 
