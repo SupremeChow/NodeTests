@@ -25,12 +25,25 @@ private:
 
 	
 public:
+
+	TreeNode();
+	TreeNode(Type newData);
+
+	Type getData();
+
 	TreeNode<Type>* getLeftNode(); //returns a pointer to the left child node
 	TreeNode<Type>* getRightNode(); //returns a pointer to the right child node
 
 
 	TreeNode<Type>* getParentNode(); //return the parent node of this TreeNode
 
+
+	void setParentNode(TreeNode* newParent);
+	void setLeftNode(TreeNode* newTail);
+	void setRightNode(TreeNode* newNext);
+	
+
+	void setData(Type newData);
 
 };
 
