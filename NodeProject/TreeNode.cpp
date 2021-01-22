@@ -22,7 +22,7 @@ TreeNode<Type>::TreeNode()
 }
 
 template<class Type>
-ListNode<Type>::ListNode(Type newData)
+TreeNode<Type>::TreeNode(Type newData)
 {
 	data = newData;
 
@@ -48,7 +48,7 @@ TreeNode<Type>* TreeNode<Type>::getRightNode()
 }
 
 template<class Type>
-TreeNode<Type>* TreeNode<Type>::parentNode()
+TreeNode<Type>* TreeNode<Type>::getParentNode()
 {
 	return parent;
 }

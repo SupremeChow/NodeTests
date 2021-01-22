@@ -29,6 +29,8 @@ public:
 	TreeNode();
 	TreeNode(Type newData);
 
+	~TreeNode();
+
 	Type getData();
 
 	TreeNode<Type>* getLeftNode(); //returns a pointer to the left child node

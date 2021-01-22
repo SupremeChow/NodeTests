@@ -34,6 +34,8 @@ private:
 public:
 	ListNode();
 	ListNode(Type newData);
+
+	ListNode();
 	
 
 	ListNode** getHeadNode(); //returns a pointer to the head node this node belongs to
