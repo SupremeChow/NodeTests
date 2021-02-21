@@ -23,6 +23,53 @@ track a root node, manage ordering, track height, and provide methods of Pre-ord
 
 #include "TreeNode.h"
 
+#include <functional> //For passing functions to tree traversal functions
+
+using namespace std;
+
+
+
+// Setting up a Functor struct in the event we don't want to use functional. Functor gives some flexibility in the tree traversal and what it can do
+template<class Type>
+struct TraverseFunctor
+{
+
+
+    Type typeTrack; //This is a public memeber that can be used to hold type value dependent on how traverseStruct is used. For example, it can be used to track sum, or perhaps max/min
+    int intTrack; //Similar to typeTrack, but used for int tracking. I.e. tracking height, number of iterations, etc
+
+    //Possibly useful, but can use an int that is assigned at construction to define behavior for overloaded ()operator. Use enum for naming convention 
+    //TODO finalize enum naming, only sure method is DELETE, which is used in post-traversal
+    enum {FOO, BAR, DELETE}traverseBehavior;
+
+    void operator(TreeNode<Type>* targetNode) {
+    
+    
+    //TODO define functor action here, possibly using switch of traverseBehavior
+
+        switch (traverseBehavior) 
+        {
+            case FOO:
+                break;
+            case BAR:
+                break;
+            case DELETE:
+
+                if (targetNODE != NULL)
+                    delete targetNode;
+
+                //Any other action placed here
+
+                break;
+        }
+
+
+    }
+
+};
+
+
+
 template<class Type>
 class BinaryTree
 {
@@ -32,14 +79,20 @@ private:
     int size;
     int currentHeight; //TODO may be redundant, but may use to track if unbalance. Height should be no more than ln(size), if not then there is an unbalance.
 
-    //TODO for now, make inorder, postorder, and preorder part of privat. Need to determine if needed to be public
+    //TODO for now, make inorder, postorder, and preorder part of private. Need to determine if needed to be public
 
     //TODO figure out how to implement functors or function pointers to take in as parameters
     
-    //void inOrder();
-    //void postOrder();
-    //void preOrder();
 
+    //Use functionals for simplicity
+    //void inOrder(function<void(*TreeNode)> funct);
+    //void postOrder(function<void(*TreeNode)> funct);
+    //void preOrder(function<void(*TreeNode)> funct);
+
+    //Use functors to have an object with state that can be used to handle extra data (ie a Type that can sum)
+    //void inOrder(TraverseFunctor *travFunct);
+    //void postOrder(TraverseFunctor *travFunct);
+    //void preOrder(TraverseFunctor *travFunct);
 
     //TODO relearn rebalance
     //void rebalance(TreeNode<Type>* pivot, TreeNode<Type>* leftPoint, TreeNode<Type>* rightPoint);
