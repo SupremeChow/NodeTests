@@ -40,9 +40,9 @@ public:
 	TreeNode<Type>* getParentNode(); //return the parent node of this TreeNode
 
 
-	void setParentNode(TreeNode* newParent);
-	void setLeftNode(TreeNode* newTail);
-	void setRightNode(TreeNode* newNext);
+	void setParentNode(TreeNode<Type>* newParent);
+	void setLeftNode(TreeNode<Type>* newTail);
+	void setRightNode(TreeNode<Type>* newNext);
 	
 
 	void setData(Type newData);
