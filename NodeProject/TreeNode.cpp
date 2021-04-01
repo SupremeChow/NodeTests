@@ -11,9 +11,8 @@ Implementation of TreeNode class. This class extends the Node class, to be imple
 
 //Constructors
 template<class Type>
-TreeNode<Type>::TreeNode()
+TreeNode<Type>::TreeNode():Node()
 {
-	data = null;
 
 	leftNode = nullptr;
 	rightNode = nullptr;
@@ -24,7 +23,7 @@ TreeNode<Type>::TreeNode()
 template<class Type>
 TreeNode<Type>::TreeNode(Type newData)
 {
-	data = newData;
+	this->data = newData;
 
 	leftNode = nullptr;
 	rightNode = nullptr;
@@ -58,7 +57,7 @@ TreeNode<Type>* TreeNode<Type>::getParentNode()
 template<class Type>
 Type TreeNode<Type>::getData()
 {
-	return data;
+	return this->data;
 }
 
 //Setters
@@ -84,6 +83,6 @@ void TreeNode<Type>::setRightNode(TreeNode<Type>* newRightNode)
 template<class Type>
 void TreeNode<Type>::setData(Type newData)
 {
-	data = newData;
+	this->data = newData;
 }
 

@@ -62,7 +62,7 @@ ListNode<Type>* ListNode<Type>::getPreviousNode()
 template<class Type>
 Type ListNode<Type>::getData()
 {
-	return data;
+	return this->data;
 }
 
 //Setters
@@ -93,5 +93,5 @@ void ListNode<Type>::setPreviousNode(ListNode<Type>* newPrevious)
 template<class Type>
 void ListNode<Type>::setData(Type newData)
 {
-	data = newData;
+	this->data = newData;
 }
