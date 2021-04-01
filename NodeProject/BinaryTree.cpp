@@ -27,6 +27,9 @@ track a root node, manage ordering, track height, and provide methods of Pre-ord
 
 Requires the use of functor class TraverseFunctor to determine the actions taking place while traversing the tree
 */
+
+
+/*
 template<class Type>
 void BinaryTree<Type>::inOrder(TreeNode<Type>* targetNode, TraverseFunctor<Type>* travFunct)
 {
@@ -77,6 +80,73 @@ void BinaryTree<Type>::preOrder(TreeNode<Type>* targetNode, TraverseFunctor<Type
 
     
 }
+*/
+
+
+
+
+template<class Type>
+void BinaryTree<Type>::inOrder(TreeNode<Type>* targetNode, int newBehavior)
+{
+    //empty pointer case
+    if (targetNode == nullptr)
+        return;
+
+    if (targetNode->leftNode != nullptr)
+        inOrder(targetNode->leftNode, travFunct);
+
+
+
+    //TODO maybe place error catching that prevents DELETE, since it can cause memory leaks
+
+    travFunct(targetNode, newBehavior);
+
+    if (targetNode->rightNode != nullptr)
+        inOrder(targetNode->rightNode, travFunct);
+}
+
+template<class Type>
+void BinaryTree<Type>::postOrder(TreeNode<Type>* targetNode, int newBehavior)
+{
+    //empty pointer case
+    if (targetNode == nullptr)
+        return;
+
+    if (targetNode->leftNode != nullptr)
+        postOrder(targetNode->leftNode, travFunct);
+
+    if (targetNode->rightNode != nullptr)
+        postOrder(targetNode->rightNode, travFunct);
+
+    travFunct(targetNode, newBehavior);
+
+}
+
+template<class Type>
+void BinaryTree<Type>::preOrder(TreeNode<Type>* targetNode, int newBehavior)
+{
+    //empty pointer case
+    if (targetNode == nullptr)
+        return;
+
+
+
+    //TODO maybe place error catching that prevents DELETE, since it can cause memory leaks
+
+    travFunct(targetNode, newBehavior);
+
+    if (targetNode->leftNode != nullptr)
+        pretOrder(targetNode->leftNode, travFunct);
+
+    if (targetNode->rightNode != nullptr)
+        preOrder(targetNode->rightNode, travFunct);
+
+
+}
+
+
+
+
 
 template<class Type>
 BinaryTree<Type>::BinaryTree() 
@@ -87,16 +157,19 @@ BinaryTree<Type>::BinaryTree()
 }
 
 template<class Type>
-BinaryTree<Type>::BinaryTree(TreeNode<Type> newRoot) 
+BinaryTree<Type>::BinaryTree(TreeNode<Type>* newRoot) 
 {
+    root = newRoot;
+    size = 1;
 
 }
+
 
 //Use PostOrder() to clean nodes from bottom up
 template<class Type>
 BinaryTree<Type>::~BinaryTree() 
 {
-
+    postOrder(root, TraverseFunctor::DELETE);
 } 
 
 
@@ -281,6 +354,7 @@ bool BinaryTree<Type>::deleteNode(Type data, TreeNode<Type>* currentNode)
 
         delete searchedNode;
         size--;
+        return true;
     }
     
 }
@@ -319,9 +393,21 @@ bool BinaryTree<Type>::deleteNode(TreeNode<Type> targetNode, TreeNode<Type>* cur
 
 
 template<class Type>
+void BinaryTree<Type>::printInOrder()
+{
+    inOrder(root, TraverseFunction::PRINT);
+}
+
+template<class Type>
+void BinaryTree<Type>::printPreOrder()
+{
+    preOrder(root, TraverseFunction::PRINT);
+}
+
+template<class Type>
 int BinaryTree<Type>::getSize()
 {
-
+    return size;
 }
 
 

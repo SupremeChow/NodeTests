@@ -10,7 +10,13 @@ This is where functionality can be added for each use of order traversal in a tr
 
 
 
+
 #pragma once
+
+#include "TreeNode.h"
+#include <iostream> //Used for PRINT function
+#include <string> //Used for print function
+
 template<class Type>
 class TraverseFunctor
 {
@@ -24,18 +30,24 @@ public:
 
     //Possibly useful, but can use an int that is assigned at construction to define behavior for overloaded ()operator. Use enum for naming convention 
     //TODO finalize enum naming, only sure method is DELETE, which is used in post-traversal
-    enum { FOO, BAR, DELETE }traverseBehavior;
+    enum { FOO, PRINT, DELETE }traverseBehavior;
 
-    void operator(TreeNode<Type>* targetNode) {
+    void operator(TreeNode<Type>* targetNode, int newBehavior) {
 
 
         //TODO define functor action here, possibly using switch of traverseBehavior
+        traverseBehavior = newBehaviour;
 
         switch (traverseBehavior)
         {
         case FOO:
             break;
-        case BAR:
+        case PRINT:
+
+
+            //TODO print behavior, for now just print to console. In an ideal program, provide options to print to (ie console, file, etc...)
+            std::cout << targetNode->getData() << " ";
+
             break;
         case DELETE:
 

@@ -94,10 +94,18 @@ private:
     //void postOrder(function<void(*TreeNode)> funct);
     //void preOrder(function<void(*TreeNode)> funct);
 
+
+
     //Use functors to have an object with state that can be used to handle extra data (ie a Type that can sum)
-    void inOrder(TreeNode<Type>* targetNode, TraverseFunctor<Type> *travFunct);
-    void postOrder(TreeNode<Type>* targetNode, TraverseFunctor<Type>*travFunct);
-    void preOrder(TreeNode<Type>* targetNode, TraverseFunctor<Type>*travFunct);
+ //   void inOrder(TreeNode<Type>* targetNode, TraverseFunctor<Type> *travFunct);
+ //   void postOrder(TreeNode<Type>* targetNode, TraverseFunctor<Type>*travFunct);
+ //  void preOrder(TreeNode<Type>* targetNode, TraverseFunctor<Type>*travFunct);
+    void inOrder(TreeNode<Type>* targetNode, int newBehavior);
+    void postOrder(TreeNode<Type>* targetNode, int newBehavior);
+    void preOrder(TreeNode<Type>* targetNode, int newBehavior);
+
+
+
 
     //TODO relearn rebalance. If making BinaryTree a abstract parent class, implement in extended classes for AVL and red-Black. For now, focus on AVL
 
@@ -106,7 +114,7 @@ private:
 
 public:
     BinaryTree();
-    BinaryTree(TreeNode<Type> newRoot);
+    BinaryTree(TreeNode<Type>* newRoot);
 
     ~BinaryTree(); //Use PostOrder() to clean nodes from bottom up
 
@@ -161,6 +169,12 @@ public:
     //else, it isnt and can break out. Could implement this for search as well. Would need to figure ways to handle when root needs to be removed and changed.
 
 
+    
+
+    void printInOrder();
+    void printPreOrder();
+    
+    
     int getSize();
 
 
