@@ -12,21 +12,20 @@
 
 
 template<class Type>
-
-
-
 class Node
 {
-private:
+protected:
 	Type data; //Template data
 	virtual bool compare(Node<Type>* targetNode) = 0; //Virtual method needed to compare, return true if items are the same
 
 	
 public:
+	Node() {}; //Default Constructor
+	Node(Type newData):data() {}; //Overloaded constructor (default constructor for data's Type)
 
 	virtual bool operator<(Node<Type>* targetNode) = 0; //Virtual method for checking if less than
 	virtual bool operator<=(Node<Type>* targetNode) = 0; //Virtual method for checking if less than or equal
-	virtual bool operator>= = (Node<Type> * targetNode) = 0; //Virtual method for checking if equal
+	virtual bool operator==(Node<Type> * targetNode) = 0; //Virtual method for checking if equal
 	virtual bool operator>=(Node<Type>* targetNode) = 0; //Virtual method for checking if greater than or equal
 	virtual bool operator>(Node<Type>* targetNode) = 0; //Virtual method for checking if greater than
 

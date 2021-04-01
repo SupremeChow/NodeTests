@@ -93,7 +93,7 @@ void BinaryTree<Type>::inOrder(TreeNode<Type>* targetNode, int newBehavior)
         return;
 
     if (targetNode->leftNode != nullptr)
-        inOrder(targetNode->leftNode, travFunct);
+        inOrder(targetNode->leftNode, newBehavior);
 
 
 
@@ -102,7 +102,7 @@ void BinaryTree<Type>::inOrder(TreeNode<Type>* targetNode, int newBehavior)
     travFunct(targetNode, newBehavior);
 
     if (targetNode->rightNode != nullptr)
-        inOrder(targetNode->rightNode, travFunct);
+        inOrder(targetNode->rightNode, newBehavior);
 }
 
 template<class Type>
@@ -113,10 +113,10 @@ void BinaryTree<Type>::postOrder(TreeNode<Type>* targetNode, int newBehavior)
         return;
 
     if (targetNode->leftNode != nullptr)
-        postOrder(targetNode->leftNode, travFunct);
+        postOrder(targetNode->leftNode, newBehavior);
 
     if (targetNode->rightNode != nullptr)
-        postOrder(targetNode->rightNode, travFunct);
+        postOrder(targetNode->rightNode, newBehavior);
 
     travFunct(targetNode, newBehavior);
 
@@ -136,10 +136,10 @@ void BinaryTree<Type>::preOrder(TreeNode<Type>* targetNode, int newBehavior)
     travFunct(targetNode, newBehavior);
 
     if (targetNode->leftNode != nullptr)
-        pretOrder(targetNode->leftNode, travFunct);
+        pretOrder(targetNode->leftNode, newBehavior);
 
     if (targetNode->rightNode != nullptr)
-        preOrder(targetNode->rightNode, travFunct);
+        preOrder(targetNode->rightNode, newBehavior);
 
 
 }
@@ -234,9 +234,9 @@ int BinaryTree<Type>::insert(Type newType, TreeNode<Type>* currentNode)
     else
     {
         if (newType <= currentNode->getData)
-            return insert(newNode, currentNode->getLeftNode);
+            return insert(newType, currentNode->getLeftNode);
         else
-            return insert(newNode, currentNode->getRightNode);
+            return insert(newType, currentNode->getRightNode);
     }
 
     //DON'T Rebalance, only child classes
@@ -310,7 +310,7 @@ bool BinaryTree<Type>::deleteNode(Type data, TreeNode<Type>* currentNode)
         //...Or, if there are no children
         else if (searchedNode->getLeftNode() == nullptr && searchedNode->getRightNode() == nullptr)
         {
-            if (searchedNode-> == root) //if this is the root...
+            if (searchedNode == root) //if this is the root...
                 root = nullptr;
         }
 
@@ -395,13 +395,13 @@ bool BinaryTree<Type>::deleteNode(TreeNode<Type> targetNode, TreeNode<Type>* cur
 template<class Type>
 void BinaryTree<Type>::printInOrder()
 {
-    inOrder(root, TraverseFunction::PRINT);
+    inOrder(root, TraverseFunctor::PRINT);
 }
 
 template<class Type>
 void BinaryTree<Type>::printPreOrder()
 {
-    preOrder(root, TraverseFunction::PRINT);
+    preOrder(root, TraverseFunctor::PRINT);
 }
 
 template<class Type>

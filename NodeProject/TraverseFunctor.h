@@ -32,11 +32,11 @@ public:
     //TODO finalize enum naming, only sure method is DELETE, which is used in post-traversal
     enum { FOO, PRINT, DELETE }traverseBehavior;
 
-    void operator(TreeNode<Type>* targetNode, int newBehavior) {
+    void operator()(TreeNode<Type>* targetNode, int newBehavior) {
 
 
         //TODO define functor action here, possibly using switch of traverseBehavior
-        traverseBehavior = newBehaviour;
+        traverseBehavior = newBehavior;
 
         switch (traverseBehavior)
         {
@@ -51,7 +51,7 @@ public:
             break;
         case DELETE:
 
-            if (targetNODE != NULL)
+            if (targetNode != NULL)
                 delete targetNode;
 
             //Any other action placed here

@@ -11,27 +11,25 @@ Implementation of ListNode class. This class extends the Node class, to be imple
 
 //Constructors
 template<class Type>
-ListNode<Type>::ListNode()
+ListNode<Type>::ListNode():Node()
 {
-	data = null;
 
-	head = null;
-	tail = null;
+	head = nullptr;
+	tail = nullptr;
 
-	next = null;
-	previous = null;
+	next = nullptr;
+	previous = nullptr;
 }
 
 template<class Type>
-ListNode<Type>::ListNode(Type newData)
+ListNode<Type>::ListNode(Type newData):Node(newData)
 {
-	data = newData;
 
-	head = null;
-	tail = null;
+	head = nullptr;
+	tail = nullptr;
 
-	next = null;
-	previous = null;
+	next = nullptr;
+	previous = nullptr;
 }
 
 

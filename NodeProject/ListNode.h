@@ -35,7 +35,9 @@ public:
 	ListNode();
 	ListNode(Type newData);
 
-	ListNode();
+
+	//TODO Hold off, copy constructor
+	//ListNode(ListNode* newNode);
 	
 
 	ListNode** getHeadNode(); //returns a pointer to the head node this node belongs to

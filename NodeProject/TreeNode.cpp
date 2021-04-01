@@ -15,10 +15,10 @@ TreeNode<Type>::TreeNode()
 {
 	data = null;
 
-	leftNode = null;
-	rightNode = null;
+	leftNode = nullptr;
+	rightNode = nullptr;
 
-	parentNode = null;
+	parentNode = nullptr;
 }
 
 template<class Type>
@@ -26,10 +26,10 @@ TreeNode<Type>::TreeNode(Type newData)
 {
 	data = newData;
 
-	leftNode = null;
-	rightNode = null;
+	leftNode = nullptr;
+	rightNode = nullptr;
 
-	parentNode = null;
+	parentNode = nullptr;
 }
 
 
@@ -44,13 +44,13 @@ TreeNode<Type>* TreeNode<Type>::getLeftNode()
 template<class Type>
 TreeNode<Type>* TreeNode<Type>::getRightNode()
 {
-	return tail;
+	return rightNode;
 }
 
 template<class Type>
 TreeNode<Type>* TreeNode<Type>::getParentNode()
 {
-	return parent;
+	return parentNode;
 }
 
 
@@ -65,7 +65,7 @@ Type TreeNode<Type>::getData()
 template<class Type>
 void TreeNode<Type>::setParentNode(TreeNode<Type>* newParent)
 {
-	parentNode = newPArent;
+	parentNode = newParent;
 }
 
 template<class Type>
