@@ -208,10 +208,31 @@ int BinaryTree<Type>::insert(TreeNode<Type>* newNode, TreeNode<Type>* currentNod
     }
     else
     {
-        if (newNode->getData <= currentNode->getData)
-            return insert(newNode, currentNode->getLeftNode);
+        if (newNode->getData() <= currentNode->getData())
+        {
+           
+            int returnValue = insert(newNode, currentNode->getLeftNode());
+            
+            //Ensure that child points back to parent
+            if (currentNode->getLeftNode()->getParentNode() == nullptr)
+            {
+                currentNode->getLeftNode()->setParentNode() = currentNode;
+            }
+            return returnValue;
+        }
+            
         else
-            return insert(newNode, currentNode->getRightNode);
+        {
+            int returnValue = insert(newNode, currentNode->getRightNode());
+
+            //Ensure that child points back to parent
+            if (currentNode->getRightNode()->getParentNode() == nullptr)
+            {
+                currentNode->getRightNode()->setParentNode() = currentNode;
+            }
+            return returnValue;
+        }
+
     }
 
     //DON'T Rebalance, only child classes
@@ -233,10 +254,29 @@ int BinaryTree<Type>::insert(Type newType, TreeNode<Type>* currentNode)
     }
     else
     {
-        if (newType <= currentNode->getData)
-            return insert(newType, currentNode->getLeftNode);
+        if (newType <= currentNode->getData())
+        {
+
+            int returnValue = insert(newType, currentNode->getLeftNode());
+
+            //Ensure that child points back to parent
+            if (currentNode->getLeftNode()->getParentNode() == nullptr)
+            {
+                currentNode->getLeftNode()->setParentNode() = currentNode;
+            }
+            return returnValue;
+        }
         else
-            return insert(newType, currentNode->getRightNode);
+        {
+            int returnValue = insert(newNode, currentNode->getRightNode());
+
+            //Ensure that child points back to parent
+            if (currentNode->getRightNode()->getParentNode() == nullptr)
+            {
+                currentNode->getRightNode()->setParentNode() = currentNode;
+            }
+            return returnValue;
+        }
     }
 
     //DON'T Rebalance, only child classes
