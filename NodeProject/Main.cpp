@@ -6,13 +6,17 @@
 	Main.cpp is the main class for starting and running
 */
 
+
+#include "BinaryTree.h"
+#include "BinaryTreeTest.h"
+
 using namespace std;
 
 //int numArgs, char* argList
 int main()
 {
 
-
+	BinaryTreeTest::mainTest(5, 100);
 
 
 	return 0;

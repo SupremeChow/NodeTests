@@ -268,7 +268,7 @@ int BinaryTree<Type>::insert(Type newType, TreeNode<Type>* currentNode)
         }
         else
         {
-            int returnValue = insert(newNode, currentNode->getRightNode());
+            int returnValue = insert(newType, currentNode->getRightNode());
 
             //Ensure that child points back to parent
             if (currentNode->getRightNode()->getParentNode() == nullptr)
