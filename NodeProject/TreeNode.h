@@ -47,5 +47,6 @@ public:
 
 	void setData(Type newData);
 
+	void operator=(TreeNode<Type>* targetNode); // overloaded copy assignment operator
 };
 

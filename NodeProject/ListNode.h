@@ -31,6 +31,11 @@ private:
 	ListNode** head;//Pointer that will point to a figurative head pointer. This makes accessing this unified for all related ListNodes (NOTE: this can be left for the data structure to handle, but for this example, we will allow elements to have this info as well) 
 	ListNode** tail;//Pointer that will point to a figurative tail pointer. This makes accessing this unified for all related ListNodes (NOTE: this can be left for the data structure to handle, but for this example, we will allow elements to have this info as well) 
 
+
+protected:
+	bool compare(Node<Type>* targetNode);
+
+
 public:
 	ListNode();
 	ListNode(Type newData);
@@ -54,6 +59,17 @@ public:
 	void setPreviousNode(ListNode* newPrevious);
 
 	void setData(Type newData);
+
+	/* TODO 4/5/2021 Moved implementation to Node, since all children should use the same comparison operator
+	 bool operator<(Node<Type>* targetNode); // method for checking if less than
+	 bool operator<=(Node<Type>* targetNode); // method for checking if less than or equal
+	 bool operator==(Node<Type>* targetNode); // method for checking if equal
+	 bool operator>=(Node<Type>* targetNode); // method for checking if greater than or equal
+	 bool operator>(Node<Type>* targetNode); // method for checking if greater than
+	 */
+
+
+	 void operator=(ListNode<Type>* targetNode); // overloaded copy assignment operator
 
 };
 
