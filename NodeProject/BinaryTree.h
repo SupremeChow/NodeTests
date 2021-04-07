@@ -32,49 +32,7 @@ track a root node, manage ordering, track height, and provide methods of Pre-ord
 using namespace std;
 
 
-/* 3/24/2021 Hiding, and moving to seperate class, so that the Functor can be accesed by other class
 
-// Setting up a Functor struct in the event we don't want to use functional. Functor gives some flexibility in the tree traversal and what it can do
-template<class Type>
-struct TraverseFunctor
-{
-
-
-    Type typeTrack; //This is a public memeber that can be used to hold type value dependent on how traverseStruct is used. For example, it can be used to track sum, or perhaps max/min
-    int intTrack; //Similar to typeTrack, but used for int tracking. I.e. tracking height, number of iterations, etc
-
-    //Possibly useful, but can use an int that is assigned at construction to define behavior for overloaded ()operator. Use enum for naming convention 
-    //TODO finalize enum naming, only sure method is DELETE, which is used in post-traversal
-    enum {FOO, BAR, DELETE}traverseBehavior;
-
-    void operator(TreeNode<Type>* targetNode) {
-    
-    
-    //TODO define functor action here, possibly using switch of traverseBehavior
-
-        switch (traverseBehavior) 
-        {
-            case FOO:
-                break;
-            case BAR:
-                break;
-            case DELETE:
-
-                if (targetNODE != NULL)
-                    delete targetNode;
-
-                //Any other action placed here
-
-                break;
-        }
-
-
-    }
-
-};
-
-
-*/
 template<class Type>
 class BinaryTree
 {
@@ -115,6 +73,9 @@ private:
 public:
     BinaryTree();
     BinaryTree(TreeNode<Type>* newRoot);
+
+    //TODO Hold off, copy constructor
+    //BinaryTree(const BinaryTree& otherBinaryTree);
 
     ~BinaryTree(); //Use PostOrder() to clean nodes from bottom up
 

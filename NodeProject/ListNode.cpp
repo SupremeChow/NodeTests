@@ -107,5 +107,28 @@ void ListNode<Type>::operator=(ListNode<Type>* targetNode) //Virtual overloaded 
 	this->tail = targetNode->tail;
 	this->next = targetNode->next;
 	this->previous = targetNode->previous;
+
+
+	//TODO 4/6/2021
+	// Need to figure how to handle neighbors that will point to this object (ie, previous node must now point to this next or next point to this as previous)
+
+
 	//return ListNode<Type> newNode(): Node(targetNode->data) : head(targetNode->head) : tail(targetNode->tail) : next(targetNode->next) : previous(targetNode->previous);
 }
+
+
+
+//TODO 4/6/2021 Hold off on this
+/*
+//Implementation of Node's virutal compare function (checking)
+template<class Type>
+void ListNode<Type>::operator=(ListNode<Type>* targetNode) //Virtual overloaded copy assignment operator
+{
+	this->data = targetNode->data;
+	this->head = targetNode->head;
+	this->tail = targetNode->tail;
+	this->next = targetNode->next;
+	this->previous = targetNode->previous;
+	//return ListNode<Type> newNode(): Node(targetNode->data) : head(targetNode->head) : tail(targetNode->tail) : next(targetNode->next) : previous(targetNode->previous);
+}
+*/

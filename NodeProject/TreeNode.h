@@ -29,6 +29,9 @@ public:
 	TreeNode();
 	TreeNode(Type newData);
 
+	//TODO Hold off, copy constructor
+	//TreeNode(const TreeNode& otherNode);
+
 	~TreeNode();
 
 	Type getData();
@@ -47,6 +50,7 @@ public:
 
 	void setData(Type newData);
 
-	void operator=(TreeNode<Type>* targetNode); // overloaded copy assignment operator
+	//TODO 4/6/2021 Hold off on this
+	//void operator=(TreeNode<Type>* targetNode); // overloaded copy assignment operator
 };
 

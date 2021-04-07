@@ -87,6 +87,10 @@ void TreeNode<Type>::setData(Type newData)
 }
 
 
+
+//TODO 4/6/2021 Hold off on this
+
+/*
 //Implementation of Node's virutal assignment operator
 template<class Type>
 void TreeNode<Type>::operator=(TreeNode<Type>* targetNode) //Virtual overloaded copy assignment operator
@@ -97,3 +101,4 @@ void TreeNode<Type>::operator=(TreeNode<Type>* targetNode) //Virtual overloaded 
 	this->rightNode = targetNode->rightNode;
 	
 }
+*/

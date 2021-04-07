@@ -13,7 +13,7 @@ BinaryTree. Not concerned with efficiency since tests will include both standard
 
 #pragma once
 #include "BinaryTree.h"
-#include "TreeNode.h" //May be redundant
+//#include "TreeNode.h" //May be redundant
 
 #include <stdio.h>   
 
@@ -23,7 +23,7 @@ BinaryTree. Not concerned with efficiency since tests will include both standard
 
 #include <random>
 
-#define RANDOM_SEED 16 //Use to seed Mt19937 (Not sure if value of seed is important)
+//#define RANDOM_SEED 16 //Use to seed Mt19937 (Not sure if value of seed is important)
 
 
 using namespace std;
@@ -32,6 +32,9 @@ using namespace std;
 
 class BinaryTreeTest
 {
+
+	const static int RANDOM_SEED = 16;
+
 
 	//Generating random number using <random> library. 
 	//From my un-educated perspective, will use mt19937 to seed random number. This is for because mt19937 is determenistic, meaning if given same seed, should expect same random set.

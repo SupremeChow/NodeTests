@@ -23,66 +23,38 @@ track a root node, manage ordering, track height, and provide methods of Pre-ord
 
 
 
+
+template<class Type>
+BinaryTree<Type>::BinaryTree()
+{
+    root = nullptr;
+    size = 0;
+    //currentHeight = 0;
+}
+
+template<class Type>
+BinaryTree<Type>::BinaryTree(TreeNode<Type>* newRoot)
+{
+    root = newRoot;
+    size = 1;
+
+}
+
+
+//Use PostOrder() to clean nodes from bottom up
+template<class Type>
+BinaryTree<Type>::~BinaryTree()
+{
+    postOrder(root, TraverseFunctor::DELETE);
+}
+
+
+
+
 /*Traversal Functions
 
 Requires the use of functor class TraverseFunctor to determine the actions taking place while traversing the tree
 */
-
-
-/*
-template<class Type>
-void BinaryTree<Type>::inOrder(TreeNode<Type>* targetNode, TraverseFunctor<Type>* travFunct)
-{
-    //empty pointer case
-    if (targetNode == nullptr) 
-        return;
-
-    if (targetNode->leftNode != nullptr)
-        inOrder(targetNode->leftNode, travFunct);
-
-        travFunct(targetNode);
-
-    if (targetNode->rightNode != nullptr)
-        inOrder(targetNode->rightNode, travFunct);
-}
-
-template<class Type>
-void BinaryTree<Type>::postOrder(TreeNode<Type>* targetNode, TraverseFunctor<Type>* travFunct)
-{
-    //empty pointer case
-    if (targetNode == nullptr)
-        return;
-
-    if (targetNode->leftNode != nullptr)
-        postOrder(targetNode->leftNode, travFunct);
-    
-    if(targetNode->rightNode != nullptr)
-        postOrder(targetNode->rightNode, travFunct);
-
-    travFunct(targetNode);
-
-}
-
-template<class Type>
-void BinaryTree<Type>::preOrder(TreeNode<Type>* targetNode, TraverseFunctor<Type>* travFunct)
-{
-    //empty pointer case
-    if (targetNode == nullptr)
-        return;
-
-    travFunct(targetNode);
-
-    if (targetNode->leftNode != nullptr)
-        pretOrder(targetNode->leftNode, travFunct);
-
-    if (targetNode->rightNode != nullptr)
-        preOrder(targetNode->rightNode, travFunct);
-
-    
-}
-*/
-
-
 
 
 template<class Type>
@@ -148,29 +120,7 @@ void BinaryTree<Type>::preOrder(TreeNode<Type>* targetNode, int newBehavior)
 
 
 
-template<class Type>
-BinaryTree<Type>::BinaryTree() 
-{
-    root = nullptr;
-    size = 0;
-    //currentHeight = 0;
-}
 
-template<class Type>
-BinaryTree<Type>::BinaryTree(TreeNode<Type>* newRoot) 
-{
-    root = newRoot;
-    size = 1;
-
-}
-
-
-//Use PostOrder() to clean nodes from bottom up
-template<class Type>
-BinaryTree<Type>::~BinaryTree() 
-{
-    postOrder(root, TraverseFunctor::DELETE);
-} 
 
 
 

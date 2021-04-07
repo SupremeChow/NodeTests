@@ -32,34 +32,6 @@ public:
     //TODO finalize enum naming, only sure method is DELETE, which is used in post-traversal
     enum { FOO, PRINT, DELETE }traverseBehavior;
 
-    void operator()(TreeNode<Type>* targetNode, int newBehavior) {
-
-
-        //TODO define functor action here, possibly using switch of traverseBehavior
-        traverseBehavior = newBehavior;
-
-        switch (traverseBehavior)
-        {
-        case FOO:
-            break;
-        case PRINT:
-
-
-            //TODO print behavior, for now just print to console. In an ideal program, provide options to print to (ie console, file, etc...)
-            std::cout << targetNode->getData() << " ";
-
-            break;
-        case DELETE:
-
-            if (targetNode != NULL)
-                delete targetNode;
-
-            //Any other action placed here
-
-            break;
-        }
-
-
-    }
+    void operator()(TreeNode<Type>* targetNode, int newBehavior); 
 };
 

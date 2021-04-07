@@ -33,7 +33,8 @@ private:
 
 
 protected:
-	bool compare(Node<Type>* targetNode);
+	//TODO 4/6/2021 Hold off on this
+	//bool compare(Node<Type>* targetNode);
 
 
 public:
@@ -42,7 +43,7 @@ public:
 
 
 	//TODO Hold off, copy constructor
-	//ListNode(ListNode* newNode);
+	//ListNode(const ListNode& otherNode);
 	
 
 	ListNode** getHeadNode(); //returns a pointer to the head node this node belongs to
