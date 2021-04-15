@@ -18,6 +18,7 @@ int BinaryTreeTest::mainTest(int numNodes, int nodeValueRange)
 {
 
 
+
 	mt19937_64 mt(RANDOM_SEED); //Use a constant Seed to create numbers
 	uniform_int_distribution<int> distribution(0, nodeValueRange); //Distribution of [0, nodeValueRange]
 

@@ -9,6 +9,13 @@ Implementation of TreeNode class. This class extends the Node class, to be imple
 
 #include "TreeNode.h"
 
+
+/* TODO 4/10/2021  Comment out and move definition to.h to try and see if this fixes linking issues
+
+
+
+
+
 //Constructors
 template<class Type>
 TreeNode<Type>::TreeNode():Node()
@@ -102,3 +109,4 @@ void TreeNode<Type>::operator=(TreeNode<Type>* targetNode) //Virtual overloaded 
 	
 }
 */
+

@@ -26,29 +26,68 @@ private:
 	
 public:
 
-	TreeNode();
-	TreeNode(Type newData);
+	TreeNode() : Node<Type>()
+	{
 
-	//TODO Hold off, copy constructor
+		leftNode = nullptr;
+		rightNode = nullptr;
+
+		parentNode = nullptr;
+	};
+	TreeNode(Type newData) {
+		this->data = newData;
+
+		leftNode = nullptr;
+		rightNode = nullptr;
+
+		parentNode = nullptr;
+	};
+
+	//TODO 4/6/2021 Hold off, copy constructor
 	//TreeNode(const TreeNode& otherNode);
 
-	~TreeNode();
 
-	Type getData();
-
-	TreeNode<Type>* getLeftNode(); //returns a pointer to the left child node
-	TreeNode<Type>* getRightNode(); //returns a pointer to the right child node
+	//TODO 4/7/2021 seeing if this is causing linking issue
+	//~TreeNode();
 
 
-	TreeNode<Type>* getParentNode(); //return the parent node of this TreeNode
 
 
-	void setParentNode(TreeNode<Type>* newParent);
-	void setLeftNode(TreeNode<Type>* newTail);
-	void setRightNode(TreeNode<Type>* newNext);
+	Type getData() {
+		return this->data;
+		
+	};
+
+	TreeNode<Type>* getLeftNode() {
+		return leftNode;
+		
+	}; //returns a pointer to the left child node
+
+	TreeNode<Type>* getRightNode() {
+		return rightNode;
+		
+	}; //returns a pointer to the right child node
+
+
+	TreeNode<Type>* getParentNode() {
+		return parentNode;
+	}; //return the parent node of this TreeNode
+
+
+	void setParentNode(TreeNode<Type>* newParent) {
+		parentNode = newParent;
+	};
+	void setLeftNode(TreeNode<Type>* newLeftNode) {
+		leftNode = newLeftNode;
+	};
+	void setRightNode(TreeNode<Type>* newRightNode) {
+		rightNode = newRightNode;
+	};
 	
 
-	void setData(Type newData);
+	void setData(Type newData) {
+		this->data = newData;
+	};
 
 	//TODO 4/6/2021 Hold off on this
 	//void operator=(TreeNode<Type>* targetNode); // overloaded copy assignment operator

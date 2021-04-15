@@ -6,7 +6,6 @@
 	Main.cpp is the main class for starting and running
 */
 
-
 #include "BinaryTree.h"
 #include "BinaryTreeTest.h"
 

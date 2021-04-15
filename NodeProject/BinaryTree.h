@@ -58,9 +58,56 @@ private:
  //   void inOrder(TreeNode<Type>* targetNode, TraverseFunctor<Type> *travFunct);
  //   void postOrder(TreeNode<Type>* targetNode, TraverseFunctor<Type>*travFunct);
  //  void preOrder(TreeNode<Type>* targetNode, TraverseFunctor<Type>*travFunct);
-    void inOrder(TreeNode<Type>* targetNode, int newBehavior);
-    void postOrder(TreeNode<Type>* targetNode, int newBehavior);
-    void preOrder(TreeNode<Type>* targetNode, int newBehavior);
+    void inOrder(TreeNode<Type>* targetNode, int newBehavior) {
+        //empty pointer case
+        if (targetNode == nullptr)
+            return;
+
+        if (targetNode->getLeftNode() != nullptr)
+            inOrder(targetNode->getLeftNode(), newBehavior);
+
+
+
+        //TODO maybe place error catching that prevents DELETE, since it can cause memory leaks
+
+        TraverseFunctor<Type>()(targetNode, newBehavior);
+
+        if (targetNode->getRightNode() != nullptr)
+            inOrder(targetNode->getRightNode(), newBehavior);
+    };
+    void postOrder(TreeNode<Type>* targetNode, int newBehavior) {
+        //empty pointer case
+        if (targetNode == nullptr)
+            return;
+
+        if (targetNode->getLeftNode() != nullptr)
+            postOrder(targetNode->getLeftNode(), newBehavior);
+
+        if (targetNode->getRightNode() != nullptr)
+            postOrder(targetNode->getRightNode(), newBehavior);
+
+        TraverseFunctor<Type>()(targetNode, newBehavior);
+
+    };
+    void preOrder(TreeNode<Type>* targetNode, int newBehavior) {
+        //empty pointer case
+        if (targetNode == nullptr)
+            return;
+
+
+
+        //TODO maybe place error catching that prevents DELETE, since it can cause memory leaks
+
+        TraverseFunctor<Type>()(targetNode, newBehavior);
+
+        if (targetNode->getLeftNode() != nullptr)
+            pretOrder(targetNode->getLeftNode(), newBehavior);
+
+        if (targetNode->rightNode != nullptr)
+            preOrder(targetNode->getRightNode(), newBehavior);
+
+
+    };
 
 
 
@@ -71,34 +118,141 @@ private:
     //virtual void rebalance(TreeNode<Type>* rebalanceNode) = 0;
 
 public:
-    BinaryTree();
-    BinaryTree(TreeNode<Type>* newRoot);
+    BinaryTree() {
+        root = nullptr;
+        size = 0;
+        //currentHeight = 0;
+    };
+    BinaryTree(TreeNode<Type>* newRoot) {
+        root = newRoot;
+        size = 1;
+
+    };
 
     //TODO Hold off, copy constructor
     //BinaryTree(const BinaryTree& otherBinaryTree);
 
-    ~BinaryTree(); //Use PostOrder() to clean nodes from bottom up
+    ~BinaryTree() {
+        postOrder(root, TraverseFunctor<Type>::DELETE);
+    }; //Use PostOrder() to clean nodes from bottom up
 
 
     //Virtual inserts() allows for basic implementation, while providing option of child classes to do their own thing
 
 
     //Main insert functions, implicitly start insert at root for simplicity and ease of use for outside calls. Calls generic inserts to handle
-    virtual int insert(TreeNode<Type>* newNode); //When given a constructed Node
-    virtual int insert(Type newType); //When only given data, not node
+    virtual int insert(TreeNode<Type>* newNode) {
+        return insert(newNode, root);
+    }; //When given a constructed Node
+    virtual int insert(Type newType) {
+        return insert(newType, root);
+    }; //When only given data, not node
 
 
     //Generic Insert functions, where the insert point is defined (used for recursion, or in rare instance user defines where to start insert process)
-    virtual int insert(TreeNode<Type>* newNode, TreeNode<Type>* currentNode); //When given a constructed Node
-    virtual int insert(Type newType, TreeNode<Type>* currentNode); //When only given data, not node
+    virtual int insert(TreeNode<Type>* newNode, TreeNode<Type>* currentNode) {
+        //Recursively find place
+
+
+        if (currentNode == nullptr)
+        {
+            currentNode = newNode;
+            size++;
+            return 0;
+        }
+        else
+        {
+            if (newNode->getData() <= currentNode->getData())
+            {
+
+                int returnValue = insert(newNode, currentNode->getLeftNode());
+
+                //Ensure that child points back to parent
+                if (currentNode->getLeftNode()->getParentNode() == nullptr)
+                {
+                    currentNode->getLeftNode()->setParentNode(currentNode);
+                }
+                return returnValue;
+            }
+
+            else
+            {
+                int returnValue = insert(newNode, currentNode->getRightNode());
+
+                //Ensure that child points back to parent
+                if (currentNode->getRightNode()->getParentNode() == nullptr)
+                {
+                    currentNode->getRightNode()->setParentNode(currentNode);
+                }
+                return returnValue;
+            }
+
+        }
+
+        //DON'T Rebalance, only child classes
+    }; //When given a constructed Node
+    virtual int insert(Type newType, TreeNode<Type>* currentNode) {
+
+        //Recursively find place
+
+
+        if (currentNode == nullptr)
+        {
+            TreeNode<Type>* newNode = new TreeNode<Type>(newType);
+            currentNode = newNode;
+            size++;
+            return 0;
+        }
+        else
+        {
+            if (newType <= currentNode->getData())
+            {
+
+                int returnValue = insert(newType, currentNode->getLeftNode());
+
+                //Ensure that child points back to parent
+                if (currentNode->getLeftNode()->getParentNode() == nullptr)
+                {
+                    currentNode->getLeftNode()->setParentNode(currentNode);
+                }
+                return returnValue;
+            }
+            else
+            {
+                int returnValue = insert(newType, currentNode->getRightNode());
+
+                //Ensure that child points back to parent
+                if (currentNode->getRightNode()->getParentNode() == nullptr)
+                {
+                    currentNode->getRightNode()->setParentNode(currentNode);
+                }
+                return returnValue;
+            }
+        }
+
+        //DON'T Rebalance, only child classes
+    }; //When only given data, not node
 
     
     
     
     
     
-    TreeNode<Type>* find(Type data); //Search by given data, default at root
-    TreeNode<Type>* find(Type data, TreeNode<Type>* currentNode); //Search by given data
+    TreeNode<Type>* find(Type data) {
+        return find(data, root);
+    }; //Search by given data, default at root
+    TreeNode<Type>* find(Type data, TreeNode<Type>* currentNode) {
+        if (currentNode == nullptr)
+            return currentNode;
+
+        if (currentNode->getData() == data)
+            return currentNode;
+        else if (currentNode->getData() < data)
+            find(data, currentNode->getLeftNode());
+        else
+            find(data, currentNode->getRightNode());
+
+    }; //Search by given data
 
 
 
@@ -112,8 +266,82 @@ public:
 
 
 
-    bool deleteNode(Type data); //find by data and delete, default at root
-    bool deleteNode(Type data, TreeNode<Type>* currentNode); //find by data and delete
+    bool deleteNode(Type data) {
+        return deleteNode(data, root);
+    }; //find by data and delete, default at root
+    bool deleteNode(Type data, TreeNode<Type>* currentNode) {
+        TreeNode<Type>* searchedNode = find(data, currentNode);
+        if (searchedNode == nullptr)
+            return false; //Didn't find node, no deletion
+        else
+        {
+            //First, if only the node had only one child branch, move it up...
+            if (searchedNode->getLeftNode() != nullptr && searchedNode->getRightNode() == nullptr)
+            {
+                if (searchedNode == root) //if this is the root...
+                    root = searchedNode->getLeftNode();
+                searchedNode->getLeftNode()->setParentNode(searchedNode->getParentNode());
+
+            }
+            else if (searchedNode->getLeftNode() == nullptr && searchedNode->getRightNode() != nullptr)
+            {
+                if (searchedNode == root) //if this is the root...
+                    root = searchedNode->getRightNode();
+                searchedNode->getRightNode()->setParentNode(searchedNode->getParentNode);
+
+
+            }
+            //...Or, if there are no children
+            else if (searchedNode->getLeftNode() == nullptr && searchedNode->getRightNode() == nullptr)
+            {
+                if (searchedNode == root) //if this is the root...
+                    root = nullptr;
+            }
+
+
+            //...else, we will try and replace with leftChild's right-most leaf and make right sibling it's right child...
+            else
+            {
+                //Recursive call to find right most grandchild of left child
+                TreeNode<Type>* replacementNode = findRightMostChild(searchedNode->getLeftNode());
+
+                if (replacementNode == searchedNode->getLeftNode()) //if just left child of node to be deleted...
+                {
+                    replacementNode->setParentNode(searchedNode->getParentNode());
+
+                    replacementNode->setRightNode(searchedNode->getRightNode());
+
+                    searchedNode->getRightNode()->setParentNode(replacementNode);
+                }
+                else
+                {
+                    replacementNode->getParentNode()->setRightNode(nullptr);
+
+                    replacementNode->setLeftNode(searchedNode->getLeftNode());
+                    searchedNode->getLeftNode()->setParentNode(replacementNode);
+
+
+                    replacementNode->setRightNode(searchedNode->getRightNode());
+                    searchedNode->getRightNode()->setParentNode(replacementNode);
+
+
+                    replacementNode->setParentNode(searchedNode->getParentNode());
+
+
+                }
+
+                if (searchedNode == root)
+                    root = replacementNode;
+            }
+
+
+
+            delete searchedNode;
+            size--;
+            return true;
+        }
+
+    }; //find by data and delete
 
 
     //TODO Hold off on this, may use system where nodes of trees all have reference to a reprasentative Root. That way, if searched for node has that rep, we know it is in tree
@@ -132,18 +360,59 @@ public:
 
     
 
-    void printInOrder();
-    void printPreOrder();
+    void printInOrder() {
+        inOrder(root, TraverseFunctor<Type>::PRINT);
+    };
+    void printPreOrder() {
+        preOrder(root, TraverseFunctor<Type>::PRINT);
+    };
     
     
-    int getSize();
+    int getSize() {
+        return size;
+    };
 
 
     //Utilities
-    TreeNode<Type>* findRightMostChild();//Called from root
-    TreeNode<Type>* findRightMostChild(TreeNode<Type>* currentNode);//Called custom node
-    TreeNode<Type>* findLeftMostChild();//Called from root
-    TreeNode<Type>* findLeftMostChild(TreeNode<Type>* currentNode);//Called custom node
+    TreeNode<Type>* findRightMostChild() {
+        if (root == nullptr)
+            return nullptr;
+        else
+            return findRightMostChild(root);
+    };//Called from root
+
+
+
+    TreeNode<Type>* findRightMostChild(TreeNode<Type>* currentNode) {
+        //TODO repetitive of root condition, however there is a chance given null Node. Setup try throw to ensure that the issue doesn't persist
+        if (currentNode == nullptr)
+            return nullptr;
+        else
+        {
+            if (currentNode->getRightNode != nullptr)
+                findRightMostChild(currentNode->getRightNode);
+            else
+                return currentNode;
+        }
+    };//Called custom node
+    TreeNode<Type>* findLeftMostChild() {
+        if (root == nullptr)
+            return nullptr;
+        else
+            return findLeftMostChild(root);
+    };//Called from root
+    TreeNode<Type>* findLeftMostChild(TreeNode<Type>* currentNode) {
+        //TODO repetitive of root condition, however there is a chance given null Node. Setup try throw to ensure that the issue doesn't persist
+        if (currentNode == nullptr)
+            return nullptr;
+        else
+        {
+            if (currentNode->getLeftNode != nullptr)
+                findRightMostChild(currentNode->getLeftNode);
+            else
+                return currentNode;
+        }
+    };//Called custom node
 
 };
 

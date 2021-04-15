@@ -9,6 +9,11 @@
 #include "Node.h"
 
 
+
+
+/* TODO 4/15/2021 Move to .h since template
+
+
 template<class Type>
 Node<Type>::Node() : data() {}; //Default Constructor
 
@@ -16,7 +21,7 @@ template<class Type>
 Node<Type>::Node(Type newData) : data(newData) {}; //Overloaded constructor (default constructor for data's Type)
 
 
-
+*/
 
 
 
@@ -30,6 +35,10 @@ bool Node<Type>::compare(Node<Type>* targetNode) //Virtual method needed to comp
 	return (this == targetNode) ? true : false;
 }
 */
+
+
+
+/* TODO 4/15/2021 Moving to .h since template
 
 
 template<class Type>
@@ -62,3 +71,4 @@ bool Node<Type>::operator>(Node<Type>* targetNode)  //Virtual method for checkin
 	return (this->data > targetNode->data) ? true : false;
 }
 
+*/

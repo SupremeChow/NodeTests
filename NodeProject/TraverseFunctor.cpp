@@ -12,6 +12,8 @@ This is where functionality can be added for each use of order traversal in a tr
 
 #include "TraverseFunctor.h"
 
+/* 4/10/2021 TODO Temp hide and put definition in .h, to try and resolve link issues
+
 template<class Type>
 void TraverseFunctor<Type>::operator()(TreeNode<Type>* targetNode, int newBehavior) {
 
@@ -42,3 +44,6 @@ void TraverseFunctor<Type>::operator()(TreeNode<Type>* targetNode, int newBehavi
 
 
 }
+
+
+*/

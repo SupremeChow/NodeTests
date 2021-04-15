@@ -19,9 +19,11 @@ track a root node, manage ordering, track height, and provide methods of Pre-ord
 */
 
 #include "BinaryTree.h"
-#include "TraverseFunctor.h"
 
 
+//#include "TraverseFunctor.h"
+
+/* 4/10/2021 Moving Template Definitions to .h to see if fix link issue
 
 
 template<class Type>
@@ -54,7 +56,15 @@ BinaryTree<Type>::~BinaryTree()
 /*Traversal Functions
 
 Requires the use of functor class TraverseFunctor to determine the actions taking place while traversing the tree
+
+
+
 */
+
+/* 4/10/2021 Moving Template Definitions to .h to see if fix link issue
+
+
+
 
 
 template<class Type>
@@ -71,7 +81,7 @@ void BinaryTree<Type>::inOrder(TreeNode<Type>* targetNode, int newBehavior)
 
     //TODO maybe place error catching that prevents DELETE, since it can cause memory leaks
 
-    travFunct(targetNode, newBehavior);
+    TraverseFunctor<Type>(targetNode, newBehavior);
 
     if (targetNode->rightNode != nullptr)
         inOrder(targetNode->rightNode, newBehavior);
@@ -90,7 +100,7 @@ void BinaryTree<Type>::postOrder(TreeNode<Type>* targetNode, int newBehavior)
     if (targetNode->rightNode != nullptr)
         postOrder(targetNode->rightNode, newBehavior);
 
-    travFunct(targetNode, newBehavior);
+    TraverseFunctor<Type>(targetNode, newBehavior);
 
 }
 
@@ -105,7 +115,7 @@ void BinaryTree<Type>::preOrder(TreeNode<Type>* targetNode, int newBehavior)
 
     //TODO maybe place error catching that prevents DELETE, since it can cause memory leaks
 
-    travFunct(targetNode, newBehavior);
+    TraverseFunctor<Type>(targetNode, newBehavior);
 
     if (targetNode->leftNode != nullptr)
         pretOrder(targetNode->leftNode, newBehavior);
@@ -375,8 +385,16 @@ bool BinaryTree<Type>::deleteNode(TreeNode<Type> targetNode, TreeNode<Type>* cur
     return false;
 }
 
+
+
+
+
 */
 
+
+
+
+/* 4/10/2021 Moving Template Definitions to .h to see if fix link issue
 
 
 
@@ -457,3 +475,6 @@ TreeNode<Type>* BinaryTree<Type>::findLeftMostChild(TreeNode<Type>* currentNode)
             return currentNode;
     }
 }
+
+
+*/

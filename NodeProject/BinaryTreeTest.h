@@ -33,7 +33,7 @@ using namespace std;
 class BinaryTreeTest
 {
 
-	const static int RANDOM_SEED = 16;
+	
 
 
 	//Generating random number using <random> library. 
@@ -44,6 +44,9 @@ class BinaryTreeTest
 
 
 public:
+	const static int RANDOM_SEED = 16;
+
+
 	//Test function 
 	static int mainTest(int numNodes, int nodeValueRange);
 

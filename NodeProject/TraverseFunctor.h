@@ -30,8 +30,35 @@ public:
 
     //Possibly useful, but can use an int that is assigned at construction to define behavior for overloaded ()operator. Use enum for naming convention 
     //TODO finalize enum naming, only sure method is DELETE, which is used in post-traversal
-    enum { FOO, PRINT, DELETE }traverseBehavior;
+    enum traverseBehavior { FOO, PRINT, DELETE } currentBehavior;
 
-    void operator()(TreeNode<Type>* targetNode, int newBehavior); 
+
+    void operator()(TreeNode<Type>* targetNode, int newBehavior) {
+
+
+        //TODO define functor action here, possibly using switch of traverseBehavior
+        traverseBehavior currentBehavior = (traverseBehavior)newBehavior;
+
+        switch (currentBehavior)
+        {
+        case FOO:
+            break;
+        case PRINT:
+
+
+            //TODO print behavior, for now just print to console. In an ideal program, provide options to print to (ie console, file, etc...)
+            std::cout << targetNode->getData() << " ";
+
+            break;
+        case DELETE:
+
+            if (targetNode != NULL)
+                delete targetNode;
+
+            //Any other action placed here
+
+            break;
+        }
+    };
 };
 

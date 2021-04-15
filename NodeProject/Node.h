@@ -46,3 +46,56 @@ public:
 
 };
 
+template<class Type>
+Node<Type>::Node() : data() {}; //Default Constructor
+
+template<class Type>
+Node<Type>::Node(Type newData) : data(newData) {}; //Overloaded constructor (default constructor for data's Type)
+
+
+
+
+
+
+
+/*Implemenation of Node Comparison Functions*/
+//TODO 4/6/2021 Hold off on this
+/*
+template<class Type>
+bool Node<Type>::compare(Node<Type>* targetNode) //Virtual method needed to compare, return true if items are the same (By pointed object, not just value)
+{
+	return (this == targetNode) ? true : false;
+}
+*/
+
+
+template<class Type>
+bool Node<Type>::operator<(Node<Type>* targetNode) //Virtual method for checking if less than
+{
+	return (this->data < targetNode->data) ? true : false;
+}
+
+template<class Type>
+bool Node<Type>::operator<=(Node<Type>* targetNode) //Virtual method for checking if less than or equal
+{
+	return (this->data <= targetNode->data) ? true : false;
+}
+
+template<class Type>
+bool Node<Type>::operator==(Node<Type>* targetNode) //Virtual method for checking if equal
+{
+	return (this->data == targetNode->data) ? true : false;
+}
+
+template<class Type>
+bool Node<Type>::operator>=(Node<Type>* targetNode) //Virtual method for checking if greater than or equal
+{
+	return (this->data >= targetNode->data) ? true : false;
+}
+
+template<class Type>
+bool Node<Type>::operator>(Node<Type>* targetNode)  //Virtual method for checking if greater than
+{
+	return (this->data > targetNode->data) ? true : false;
+}
+
