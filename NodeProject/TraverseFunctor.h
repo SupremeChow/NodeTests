@@ -36,6 +36,8 @@ public:
     void operator()(TreeNode<Type>* targetNode, int newBehavior) {
 
 
+        std::cout << "In functor operator...";
+
         //TODO define functor action here, possibly using switch of traverseBehavior
         traverseBehavior currentBehavior = (traverseBehavior)newBehavior;
 

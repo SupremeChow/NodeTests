@@ -34,7 +34,7 @@ public:
 
 		parentNode = nullptr;
 	};
-	TreeNode(Type newData) {
+	TreeNode(Type newData) : Node<Type>() {
 		this->data = newData;
 
 		leftNode = nullptr;

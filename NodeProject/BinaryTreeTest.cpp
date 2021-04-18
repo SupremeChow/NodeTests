@@ -16,7 +16,7 @@ using namespace std;
 
 int BinaryTreeTest::mainTest(int numNodes, int nodeValueRange)
 {
-
+	cout << "Starting test... \n";
 
 
 	mt19937_64 mt(RANDOM_SEED); //Use a constant Seed to create numbers
@@ -25,9 +25,12 @@ int BinaryTreeTest::mainTest(int numNodes, int nodeValueRange)
 
 	BinaryTree<int>* testTree = new BinaryTree<int>();
 	int functionReturns;
+	cout << "Printing numbers: ";
 	for (int i = 0; i < numNodes; i++)
 	{
 		int randomNumber = distribution(mt);
+
+		cout << randomNumber << " ";
 		functionReturns = testTree->insert(randomNumber);
 		if (functionReturns != 0) //TODO maybe setup error code constants in BinaryTree
 		{
@@ -36,6 +39,8 @@ int BinaryTreeTest::mainTest(int numNodes, int nodeValueRange)
 		}
 	}
 
+	cout << "\n \n Printing in Order \n";
+
 
 	//Print in-order to check if correct ordering
 	//TODO perhaps add function in BinaryTree that returns traversal ordering as  vector for analysis. For now just print
@@ -43,9 +48,12 @@ int BinaryTreeTest::mainTest(int numNodes, int nodeValueRange)
 	testTree->printInOrder();
 	//TODO instead take a vector of output, analyze, and evaluate
 
-
+	cout << "\n Now deleting... \n";
 	//DELETE Tree
 	delete testTree;
+
+
+	cout << "\n Test finished, going back to main...\n";
 
 	return 0;
 

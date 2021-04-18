@@ -9,6 +9,9 @@
 #include "BinaryTree.h"
 #include "BinaryTreeTest.h"
 
+
+#include <stdio.h>   
+
 using namespace std;
 
 //int numArgs, char* argList
@@ -16,6 +19,22 @@ int main()
 {
 
 	BinaryTreeTest::mainTest(5, 100);
+
+
+
+
+	/*
+	BinaryTree<int>* testTree = new BinaryTree<int>();
+	TreeNode<int>* targetNode;
+
+
+	testTree->insert(10);
+
+	targetNode = testTree->getRoot();
+
+	
+	cout << targetNode->getData() << "\n";
+	*/
 
 
 	return 0;

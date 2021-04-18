@@ -150,7 +150,7 @@ public:
 
 
     //Generic Insert functions, where the insert point is defined (used for recursion, or in rare instance user defines where to start insert process)
-    virtual int insert(TreeNode<Type>* newNode, TreeNode<Type>* currentNode) {
+    virtual int insert(TreeNode<Type>* newNode, TreeNode<Type>*& currentNode) {
         //Recursively find place
 
 
@@ -162,36 +162,26 @@ public:
         }
         else
         {
-            if (newNode->getData() <= currentNode->getData())
-            {
-
-                int returnValue = insert(newNode, currentNode->getLeftNode());
-
-                //Ensure that child points back to parent
-                if (currentNode->getLeftNode()->getParentNode() == nullptr)
-                {
-                    currentNode->getLeftNode()->setParentNode(currentNode);
-                }
-                return returnValue;
-            }
-
+            Type newNodeValue = newNode->getData();
+            TreeNode<Type>* nextNode;
+            
+            if (newNodeValue <= currentNode->getData())
+                nextNode = currentNode->getLeftNode();
             else
+                nextNode = currentNode->getRightNode();
+
+            int returnValue = insert(newNode, nextNode);
+
+            //Ensure that child points back to parent
+            if (nextNode->getParentNode() == nullptr)
             {
-                int returnValue = insert(newNode, currentNode->getRightNode());
-
-                //Ensure that child points back to parent
-                if (currentNode->getRightNode()->getParentNode() == nullptr)
-                {
-                    currentNode->getRightNode()->setParentNode(currentNode);
-                }
-                return returnValue;
+                nextNode->setParentNode(currentNode);
             }
-
+            return returnValue;
         }
-
         //DON'T Rebalance, only child classes
     }; //When given a constructed Node
-    virtual int insert(Type newType, TreeNode<Type>* currentNode) {
+    virtual int insert(Type newType, TreeNode<Type>*& currentNode) {
 
         //Recursively find place
 
@@ -205,29 +195,21 @@ public:
         }
         else
         {
+            TreeNode<Type>* nextNode;
             if (newType <= currentNode->getData())
-            {
+                nextNode = currentNode->getLeftNode();
 
-                int returnValue = insert(newType, currentNode->getLeftNode());
-
-                //Ensure that child points back to parent
-                if (currentNode->getLeftNode()->getParentNode() == nullptr)
-                {
-                    currentNode->getLeftNode()->setParentNode(currentNode);
-                }
-                return returnValue;
-            }
             else
-            {
-                int returnValue = insert(newType, currentNode->getRightNode());
+                nextNode = currentNode->getRightNode();
 
-                //Ensure that child points back to parent
-                if (currentNode->getRightNode()->getParentNode() == nullptr)
-                {
-                    currentNode->getRightNode()->setParentNode(currentNode);
-                }
-                return returnValue;
+            int returnValue = insert(newType, nextNode);
+            
+            //Ensure that child points back to parent
+            if (nextNode->getParentNode() == nullptr)
+            {
+                nextNode->setParentNode(currentNode);
             }
+            return returnValue;
         }
 
         //DON'T Rebalance, only child classes
@@ -342,6 +324,17 @@ public:
         }
 
     }; //find by data and delete
+
+
+
+
+
+
+    TreeNode<Type>* getRoot()
+    {
+        return root;
+    };
+
 
 
     //TODO Hold off on this, may use system where nodes of trees all have reference to a reprasentative Root. That way, if searched for node has that rep, we know it is in tree
