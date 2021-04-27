@@ -34,6 +34,9 @@ int main()
 
 	
 	cout << targetNode->getData() << "\n";
+
+	testTree->insert(5);
+	testTree->printInOrder();
 	*/
 
 

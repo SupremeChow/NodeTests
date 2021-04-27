@@ -197,10 +197,38 @@ public:
         {
             TreeNode<Type>* nextNode;
             if (newType <= currentNode->getData())
+            {
+                if (currentNode->getLeftNode() == nullptr) //At a null leaf, go ahead an create object
+                {
+                    TreeNode<Type>* newNode = new TreeNode<Type>(newType);
+                    currentNode->setLeftNode(newNode);
+                    size++;
+                    return 0;
+                }
                 nextNode = currentNode->getLeftNode();
+            }
+                
 
             else
+            {
+                if (currentNode->getRightNode() == nullptr) //At a null leaf, go ahead an create object
+                {
+                    TreeNode<Type>* newNode = new TreeNode<Type>(newType);
+                    currentNode->setRightNode(newNode);
+                    size++;
+                    return 0;
+                }
                 nextNode = currentNode->getRightNode();
+
+            }
+                
+
+
+
+            
+
+
+
 
             int returnValue = insert(newType, nextNode);
             
