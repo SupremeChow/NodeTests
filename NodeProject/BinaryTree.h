@@ -174,11 +174,33 @@ public:
             TreeNode<Type>* nextNode;
             
             if (newNodeValue <= currentNode->getData())
+            {
+                if (currentNode->getLeftNode() == nullptr) //At a null leaf, go ahead an create object
+                {
+                    currentNode->setLeftNode(newNode);
+                    size++;
+                    return 0;
+                }
                 nextNode = currentNode->getLeftNode();
+            }
+                
             else
+            {
+                if (currentNode->getRightNode() == nullptr) //At a null leaf, go ahead an create object
+                {
+                    currentNode->setRightNode(newNode);
+                    size++;
+                    return 0;
+                }
                 nextNode = currentNode->getRightNode();
+            }
+                
+
+
 
             int returnValue = insert(newNode, nextNode);
+
+
 
             //Ensure that child points back to parent
             if (nextNode->getParentNode() == nullptr)
