@@ -48,6 +48,16 @@ int BinaryTreeTest::mainTest(int numNodes, int nodeValueRange)
 	testTree->printInOrder();
 	//TODO instead take a vector of output, analyze, and evaluate
 
+	cout << "\n \n printing pre-order \n";
+	testTree->printPreOrder();
+
+	
+	cout << "\n \n testing delete of non-available number \n"; //Becuase we did determenistic random numbers, we know what numbers will and will not show in test
+
+
+
+
+
 	cout << "\n Now deleting... \n";
 	//DELETE Tree
 	delete testTree;

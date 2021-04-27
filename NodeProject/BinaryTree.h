@@ -58,7 +58,12 @@ private:
  //   void inOrder(TreeNode<Type>* targetNode, TraverseFunctor<Type> *travFunct);
  //   void postOrder(TreeNode<Type>* targetNode, TraverseFunctor<Type>*travFunct);
  //  void preOrder(TreeNode<Type>* targetNode, TraverseFunctor<Type>*travFunct);
+
+    /*Inorder Traversal: Ideal for listing in increasing value*/
     void inOrder(TreeNode<Type>* targetNode, int newBehavior) {
+        
+
+
         //empty pointer case
         if (targetNode == nullptr)
             return;
@@ -75,6 +80,8 @@ private:
         if (targetNode->getRightNode() != nullptr)
             inOrder(targetNode->getRightNode(), newBehavior);
     };
+
+    /*PostOrder Traversal: Ideal for delete*/
     void postOrder(TreeNode<Type>* targetNode, int newBehavior) {
         //empty pointer case
         if (targetNode == nullptr)
@@ -89,6 +96,7 @@ private:
         TraverseFunctor<Type>()(targetNode, newBehavior);
 
     };
+    /*PreOrder Traversal: Ideal for copying tree node by node*/
     void preOrder(TreeNode<Type>* targetNode, int newBehavior) {
         //empty pointer case
         if (targetNode == nullptr)
@@ -101,9 +109,9 @@ private:
         TraverseFunctor<Type>()(targetNode, newBehavior);
 
         if (targetNode->getLeftNode() != nullptr)
-            pretOrder(targetNode->getLeftNode(), newBehavior);
+            preOrder(targetNode->getLeftNode(), newBehavior);
 
-        if (targetNode->rightNode != nullptr)
+        if (targetNode->getRightNode() != nullptr)
             preOrder(targetNode->getRightNode(), newBehavior);
 
 
