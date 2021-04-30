@@ -79,11 +79,13 @@ public:
 	};
 	void setLeftNode(TreeNode<Type>* newLeftNode) {
 		leftNode = newLeftNode;
-		newLeftNode->setParentNode(this);
+		if(newLeftNode != nullptr)
+			newLeftNode->setParentNode(this);
 	};
 	void setRightNode(TreeNode<Type>* newRightNode) {
 		rightNode = newRightNode;
-		newRightNode->setParentNode(this);
+		if (newRightNode != nullptr)
+			newRightNode->setParentNode(this);
 	};
 	
 

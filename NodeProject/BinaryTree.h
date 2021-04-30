@@ -287,7 +287,7 @@ public:
 
         if (currentNode->getData() == data)
             return currentNode;
-        else if (currentNode->getData() < data)
+        else if (currentNode->getData() > data)
             find(data, currentNode->getLeftNode());
         else
             find(data, currentNode->getRightNode());
@@ -318,17 +318,34 @@ public:
             //First, if only the node had only one child branch, move it up...
             if (searchedNode->getLeftNode() != nullptr && searchedNode->getRightNode() == nullptr)
             {
+                
+                searchedNode->getLeftNode()->setParentNode(searchedNode->getParentNode());
+
                 if (searchedNode == root) //if this is the root...
                     root = searchedNode->getLeftNode();
-                searchedNode->getLeftNode()->setParentNode(searchedNode->getParentNode());
+                else
+                {
+                    if (searchedNode->getParentNode()->getData() >= searchedNode->getData())
+                        searchedNode->getParentNode()->setLeftNode(searchedNode->getLeftNode());
+                    else
+                        searchedNode->getParentNode()->setRightNode(searchedNode->getLeftNode());
+                }
 
             }
             else if (searchedNode->getLeftNode() == nullptr && searchedNode->getRightNode() != nullptr)
             {
+               
+                searchedNode->getRightNode()->setParentNode(searchedNode->getParentNode());
+
                 if (searchedNode == root) //if this is the root...
                     root = searchedNode->getRightNode();
-                searchedNode->getRightNode()->setParentNode(searchedNode->getParentNode);
-
+                else
+                {
+                    if (searchedNode->getParentNode()->getData() >= searchedNode->getData())
+                        searchedNode->getParentNode()->setLeftNode(searchedNode->getRightNode());
+                    else
+                        searchedNode->getParentNode()->setRightNode(searchedNode->getRightNode());
+                }
 
             }
             //...Or, if there are no children
@@ -336,6 +353,15 @@ public:
             {
                 if (searchedNode == root) //if this is the root...
                     root = nullptr;
+                //otherwise, will need to make sure parent no longer points to this node
+                if (searchedNode->getParentNode()->getData() >= searchedNode->getData())
+                {
+                    searchedNode->getParentNode()->setLeftNode(nullptr);
+                }
+                else
+                {
+                    searchedNode->getParentNode()->setRightNode(nullptr);
+                }
             }
 
 
@@ -372,6 +398,13 @@ public:
 
                 if (searchedNode == root)
                     root = replacementNode;
+                else
+                {
+                    if (searchedNode->getParentNode()->getData() >= searchedNode->getData())
+                        searchedNode->getParentNode()->setLeftNode(replacementNode);
+                    else
+                        searchedNode->getParentNode()->setRightNode(replacementNode);
+                }
             }
 
 
@@ -440,8 +473,8 @@ public:
             return nullptr;
         else
         {
-            if (currentNode->getRightNode != nullptr)
-                findRightMostChild(currentNode->getRightNode);
+            if (currentNode->getRightNode() != nullptr)
+                findRightMostChild(currentNode->getRightNode());
             else
                 return currentNode;
         }
@@ -458,8 +491,8 @@ public:
             return nullptr;
         else
         {
-            if (currentNode->getLeftNode != nullptr)
-                findRightMostChild(currentNode->getLeftNode);
+            if (currentNode->getLeftNode() != nullptr)
+                findRightMostChild(currentNode->getLeftNode());
             else
                 return currentNode;
         }
