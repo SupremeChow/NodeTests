@@ -1,12 +1,11 @@
 /**
 @author Phillip Chow
 
-	TreeNode is an extension of the Node class, to be implemented in list based applications
+	TreeNode is an extension of the Node class, to be implemented in tree based applications
 	The main characteristics that define it are:
 	* Two pointers to left and right child
 	* A node to the parent
 
-	Unlike ListNode, will not also track a head node of the entire tree. Will leave this to the data structure to handle
 */
 
 
@@ -19,13 +18,16 @@ template<class Type>
 class TreeNode : public Node<Type>
 {
 private:
-	TreeNode<Type>* leftNode; //Pointer to previous Node
-	TreeNode<Type>* rightNode; //Pointer to previous Node
-	TreeNode<Type>* parentNode; //Pointer to previous Node
+	TreeNode<Type>* leftNode; //Pointer to Left Node
+	TreeNode<Type>* rightNode; //Pointer to Right Node
+	TreeNode<Type>* parentNode; //Pointer to Parent Node
 
 	
 public:
 
+/************************************************************
+				Constructor/Destructors
+************************************************************/
 	TreeNode() : Node<Type>()
 	{
 
@@ -43,6 +45,10 @@ public:
 		parentNode = nullptr;
 	};
 
+	//TODO Add overloaded constrtructor with given pointers (!!! Need method to check if new pointers are valid after creation !!!!)
+	//TreeNode(Type newData, TreeNode*& newLeftNode, TreeNode*& newRightNode, TreeNode*& newParentNode,)
+
+
 	//TODO 4/6/2021 Hold off, copy constructor
 	//TreeNode(const TreeNode& otherNode);
 
@@ -50,6 +56,11 @@ public:
 	//TODO 4/7/2021 seeing if this is causing linking issue
 	//~TreeNode();
 
+
+
+/************************************************************
+					Getters/Setters
+************************************************************/
 
 
 
@@ -72,6 +83,9 @@ public:
 	TreeNode<Type>* getParentNode() {
 		return parentNode;
 	}; //return the parent node of this TreeNode
+
+
+
 
 
 	void setParentNode(TreeNode<Type>* newParent) {

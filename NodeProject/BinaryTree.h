@@ -9,8 +9,7 @@ However, this class will act as a container class, which will handle all the log
 track a root node, manage ordering, track height, and provide methods of Pre-order, post-order, and in order
  that can take function pointers to do whatever is necessary (e.g. deletion). 
 
- TODO Because nodes use template data, will need to make this class template as well, to avoid
- type mismatch and issues with pointer sizes.
+ 
 
  TODO Need to re-learn rebalancing of trees, when they occur and how to do it. Will probably setupd member data for easier tracking
  of these conditions
@@ -40,13 +39,13 @@ private:
     TreeNode<Type>* root;
 
     int size;
-    //int currentHeight; //TODO may be redundant, but may use to track if unbalance. Height should be no more than ln(size), if not then there is an unbalance.
-
-    //TODO for now, make inorder, postorder, and preorder part of private. Need to determine if needed to be public
-
-    //TODO figure out how to implement functors or function pointers to take in as parameters
     
 
+    /************************************************************
+       !!!!!!!!!!!!!!!!                     !!!!!!!!!!!!!!!!!!!
+                            Un-used Misc.
+       !!!!!!!!!!!!!!!!                     !!!!!!!!!!!!!!!!!!!
+    ************************************************************/
     //Use functionals for simplicity
     //void inOrder(function<void(*TreeNode)> funct);
     //void postOrder(function<void(*TreeNode)> funct);
@@ -59,8 +58,15 @@ private:
  //   void postOrder(TreeNode<Type>* targetNode, TraverseFunctor<Type>*travFunct);
  //  void preOrder(TreeNode<Type>* targetNode, TraverseFunctor<Type>*travFunct);
 
-    /*Inorder Traversal: Ideal for listing in increasing value*/
-    void inOrder(TreeNode<Type>* targetNode, int newBehavior) {
+    /************************************************************
+                            Traversals
+    ************************************************************/
+
+
+
+    /* Inorder Traversal: Ideal for listing in increasing value */
+    void inOrder(TreeNode<Type>* targetNode, int newBehavior) 
+    {
         
 
 
@@ -82,7 +88,8 @@ private:
     };
 
     /*PostOrder Traversal: Ideal for delete*/
-    void postOrder(TreeNode<Type>* targetNode, int newBehavior) {
+    void postOrder(TreeNode<Type>* targetNode, int newBehavior) 
+    {
         //empty pointer case
         if (targetNode == nullptr)
             return;
@@ -96,8 +103,10 @@ private:
         TraverseFunctor<Type>()(targetNode, newBehavior);
 
     };
+
     /*PreOrder Traversal: Ideal for copying tree node by node*/
-    void preOrder(TreeNode<Type>* targetNode, int newBehavior) {
+    void preOrder(TreeNode<Type>* targetNode, int newBehavior)
+    {
         //empty pointer case
         if (targetNode == nullptr)
             return;
@@ -119,46 +128,89 @@ private:
 
 
 
-
-    //TODO relearn rebalance. If making BinaryTree a abstract parent class, implement in extended classes for AVL and red-Black. For now, focus on AVL
-
-    // 3/24/2021: Doubling back, Binary Tree will be a accesible class, But will not rebalance. It will be general use, and any updated tree feature (like rebalance) will be implemented in child classes
-    //virtual void rebalance(TreeNode<Type>* rebalanceNode) = 0;
-
 public:
-    BinaryTree() {
+    /************************************************************
+                     Constructor/Destructors
+    ************************************************************/
+
+
+    BinaryTree() 
+    {
         root = nullptr;
         size = 0;
         //currentHeight = 0;
     };
-    BinaryTree(TreeNode<Type>* newRoot) {
+    BinaryTree(TreeNode<Type>* newRoot) 
+    {
         root = newRoot;
         size = 1;
 
     };
 
+
     //TODO Hold off, copy constructor
     //BinaryTree(const BinaryTree& otherBinaryTree);
 
-    ~BinaryTree() {
+
+    ~BinaryTree() 
+    {
         postOrder(root, TraverseFunctor<Type>::DELETE);
     }; //Use PostOrder() to clean nodes from bottom up
 
 
+
+
+
+    /************************************************************
+                            Getters/Setters
+    ************************************************************/
+
+
+    TreeNode<Type>* getRoot()
+    {
+        return root;
+    };
+
+
+    int getSize()
+    {
+        return size;
+    };
+
+    /************************************************************
+                            Insert
+    ************************************************************/
     //Virtual inserts() allows for basic implementation, while providing option of child classes to do their own thing
+   
+    
+    
+    
+
+     //*****   Main insert functions, implicitly start insert at root for simplicity and ease of use for outside calls. Calls generic inserts to handle
 
 
-    //Main insert functions, implicitly start insert at root for simplicity and ease of use for outside calls. Calls generic inserts to handle
-    virtual int insert(TreeNode<Type>* newNode) {
+    //When given a constructed Node
+    virtual int insert(TreeNode<Type>* newNode) 
+    {
         return insert(newNode, root);
-    }; //When given a constructed Node
-    virtual int insert(Type newType) {
+    }; 
+
+    //When only given data, not node
+    virtual int insert(Type newType) 
+    {
         return insert(newType, root);
-    }; //When only given data, not node
+    }; 
 
 
-    //Generic Insert functions, where the insert point is defined (used for recursion, or in rare instance user defines where to start insert process)
-    virtual int insert(TreeNode<Type>* newNode, TreeNode<Type>*& currentNode) {
+
+
+
+    //******  Generic Insert functions, where the insert point is defined (used for recursion, or in rare instance user defines where to start insert process)
+
+
+    //When given a constructed Node
+    virtual int insert(TreeNode<Type>* newNode, TreeNode<Type>*& currentNode) 
+    {
         //Recursively find place
 
 
@@ -210,8 +262,15 @@ public:
             return returnValue;
         }
         //DON'T Rebalance, only child classes
-    }; //When given a constructed Node
-    virtual int insert(Type newType, TreeNode<Type>*& currentNode) {
+    }; 
+
+
+
+    //TODO 4/30/2021 Implement overloaded Constructor for a node to simplify creation of node and assigning it's pointer values
+
+    //When only given data, not node
+    virtual int insert(Type newType, TreeNode<Type>*& currentNode) 
+    {
 
         //Recursively find place
 
@@ -253,13 +312,6 @@ public:
             }
                 
 
-
-
-            
-
-
-
-
             int returnValue = insert(newType, nextNode);
             
             //Ensure that child points back to parent
@@ -271,17 +323,27 @@ public:
         }
 
         //DON'T Rebalance, only child classes
-    }; //When only given data, not node
+    }; 
 
     
+
+
+    
+    /************************************************************
+                            Find
+    ************************************************************/
     
     
-    
-    
-    TreeNode<Type>* find(Type data) {
+
+    //Search by given data, starting at root by default
+    TreeNode<Type>* find(Type data) 
+    {
         return find(data, root);
-    }; //Search by given data, default at root
-    TreeNode<Type>* find(Type data, TreeNode<Type>* currentNode) {
+    }; 
+
+    //Search by given data, starting at given Node point
+    TreeNode<Type>* find(Type data, TreeNode<Type>* currentNode) 
+    {
         if (currentNode == nullptr)
             return currentNode;
 
@@ -292,24 +354,26 @@ public:
         else
             find(data, currentNode->getRightNode());
 
-    }; //Search by given data
+    }; 
 
 
-
-
-    //TreeNode<Type>* find(Type data); //Search by given TreeNode pointer, default at root (TODO hold off until figure out if using Root reprasentative)
-    //TreeNode<Type>* find(Type data, TreeNode<Type>* currentNode); //Search by given TreeNode pointer (TODO hold off until figure out if using Root reprasentative)
    
 
+/************************************************************
+                      Delete Node
+************************************************************/
 
 
-
-
-
-    bool deleteNode(Type data) {
+//find by data and delete, start at root by default
+    bool deleteNode(Type data) 
+    {
         return deleteNode(data, root);
-    }; //find by data and delete, default at root
-    bool deleteNode(Type data, TreeNode<Type>* currentNode) {
+    }; 
+
+
+    //find by data and delete
+    bool deleteNode(Type data, TreeNode<Type>* currentNode) 
+    {
         TreeNode<Type>* searchedNode = find(data, currentNode);
         if (searchedNode == nullptr)
             return false; //Didn't find node, no deletion
@@ -414,17 +478,12 @@ public:
             return true;
         }
 
-    }; //find by data and delete
+    }; 
 
 
 
 
-
-
-    TreeNode<Type>* getRoot()
-    {
-        return root;
-    };
+    
 
 
 
@@ -444,30 +503,44 @@ public:
 
     
 
-    void printInOrder() {
+
+    /************************************************************
+                            Tree Utilities
+    ************************************************************/
+
+
+    //******* Tree Print Functions ***********
+
+    void printInOrder() 
+    {
         inOrder(root, TraverseFunctor<Type>::PRINT);
     };
-    void printPreOrder() {
+    void printPreOrder() 
+    {
         preOrder(root, TraverseFunctor<Type>::PRINT);
     };
     
     
-    int getSize() {
-        return size;
-    };
 
 
-    //Utilities
-    TreeNode<Type>* findRightMostChild() {
+
+
+    //********* Min/Max of Tree **********
+
+
+    //Find Right Most (Max value), starting from root
+    TreeNode<Type>* findRightMostChild() 
+    {
         if (root == nullptr)
             return nullptr;
         else
             return findRightMostChild(root);
-    };//Called from root
+    };
 
 
-
-    TreeNode<Type>* findRightMostChild(TreeNode<Type>* currentNode) {
+    //Find Right Most (Max value), starting from given Node
+    TreeNode<Type>* findRightMostChild(TreeNode<Type>* currentNode) 
+    {
         //TODO repetitive of root condition, however there is a chance given null Node. Setup try throw to ensure that the issue doesn't persist
         if (currentNode == nullptr)
             return nullptr;
@@ -478,14 +551,23 @@ public:
             else
                 return currentNode;
         }
-    };//Called custom node
-    TreeNode<Type>* findLeftMostChild() {
+    };
+
+
+
+
+    //Find Left Most (Min value), starting from root
+    TreeNode<Type>* findLeftMostChild() 
+    {
         if (root == nullptr)
             return nullptr;
         else
             return findLeftMostChild(root);
-    };//Called from root
-    TreeNode<Type>* findLeftMostChild(TreeNode<Type>* currentNode) {
+    };
+
+    //Find Left Most (Min value), starting from given Node
+    TreeNode<Type>* findLeftMostChild(TreeNode<Type>* currentNode) 
+    {
         //TODO repetitive of root condition, however there is a chance given null Node. Setup try throw to ensure that the issue doesn't persist
         if (currentNode == nullptr)
             return nullptr;
@@ -496,7 +578,7 @@ public:
             else
                 return currentNode;
         }
-    };//Called custom node
+    };
 
 };
 

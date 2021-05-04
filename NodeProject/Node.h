@@ -26,6 +26,8 @@ public:
 	Node(); //Default Constructor
 	Node(Type newData); //Overloaded constructor (default constructor for data's Type)
 
+	Type getData();
+
 	/* TODO 4/5/2021 Making NON pure virtual, since all child classes should use the same orperator comparison 
 	virtual bool operator<(Node<Type>* targetNode) = 0; //Virtual method for checking if less than
 	virtual bool operator<=(Node<Type>* targetNode) = 0; //Virtual method for checking if less than or equal
@@ -46,6 +48,9 @@ public:
 
 };
 
+/************************************************************
+				Constructor/Destructors
+************************************************************/
 template<class Type>
 Node<Type>::Node() : data() {}; //Default Constructor
 
@@ -54,8 +59,19 @@ Node<Type>::Node(Type newData) : data(newData) {}; //Overloaded constructor (def
 
 
 
+/************************************************************
+					Getters/Setters
+************************************************************/
+template<class Type>
+Type Node<Type>::getData() {
+	return this->data;
+
+};
 
 
+/************************************************************
+				Node Comparison
+************************************************************/
 
 
 /*Implemenation of Node Comparison Functions*/
@@ -67,6 +83,12 @@ bool Node<Type>::compare(Node<Type>* targetNode) //Virtual method needed to comp
 	return (this == targetNode) ? true : false;
 }
 */
+
+
+
+/************************************************************
+				Overloaded Comparison Operators
+************************************************************/
 
 
 template<class Type>
