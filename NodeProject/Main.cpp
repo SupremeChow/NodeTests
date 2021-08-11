@@ -97,6 +97,36 @@ int main()
 		cout << "ERROR, Alplhalpha is now having issues for some reason \n";
 
 
+
+
+
+	//Loading file
+
+	bool dictLoaded = testTries->loadDictionary("C:\\Users\\Phillip\\source\\repos\\NodeProject\\Debug\\Dictionary.txt");
+
+	if(dictLoaded)
+		cout << "Dictionary loaded, now testing validity... \n";
+	else
+		cout << "ERROR, Dictionary not loaded \n";
+
+	//TODO try printing ALL words, would need helpr function in Tries.h which could also be implemented in writing to file
+
+
+	if (testTries->isWord("Zeta"))
+		cout << "Dictionary Word \'Zeta\' was sucessfully added \n";
+	else
+		cout << "ERROR, Dictionary owrd \'Zeta\' NOT added... \n";
+
+	if (testTries->isWord("Alphalpha"))
+		cout << "Alphalpha maintained after dictionary added.. \n";
+	else
+		cout << "ERROR, Alplhalpha is now having issues for some reason AFTER dictionary added... \n";
+
+
+
+
+
+
 	//BinaryTreeTest::mainTest(5, 100);
 
 

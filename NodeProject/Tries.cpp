@@ -76,7 +76,29 @@ Tries::Tries(string filePath)
 
 bool Tries::loadDictionary(string filePath)
 {
-	return false;
+
+	//TODO Check if a file is already open
+
+	if (infile.is_open())
+		infile.close();
+		
+
+	bool isOpen;
+	infile.open(filePath);
+	isOpen = infile.is_open();
+	if (!isOpen)
+	{
+		cout << "ERROR Cannot open file path, creating empty Tries";
+		return false;
+
+	}
+	else
+	{
+		processDictionary(); //TODO in future, implement return boolean which would idicate errors in parsing/format, which would require either creating an empty Tries, or quiting
+	}
+
+
+	return true;
 }
 
 bool Tries::saveDictionary()
