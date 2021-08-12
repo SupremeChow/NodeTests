@@ -16,13 +16,39 @@ For example, thgis class can track the ammount of words in the Tries, assign def
 #pragma once
 
 #include "TriesNode.h"
-#include <string>
-#include <sstream> //for stringstream needed for parsing and tokenizing dictionary input
 
+//*****************************************
+#include <string>
+
+//*****************************************
+
+//*****************************************
 #include <fstream> //Reading and writing to file
 #include <iostream>
 
+#include <sstream> //for stringstream needed for parsing and tokenizing dictionary input
+//*****************************************
+
+
+//*****************************************
+
 #include <memory> // for using smart pointer, something new
+//*****************************************
+
+
+
+//TODO Maybe no need, let TriedNode handle threading
+//*****************************************
+//Using these libraries for parallel processing, specifically writing out to file or console
+
+#include <thread>
+#include <mutex>
+
+//*****************************************
+
+
+
+
 
 using namespace std;
 
@@ -34,9 +60,21 @@ private:
 	ifstream infile;
 	ofstream outfile;
 
+	
+
 	//TODO the infile reference may be redundant, since infile is already used. Hold off on this
 	//bool processDictionary(const ifstream& infile); 
 	bool processDictionary();
+
+
+	/*
+		Takes an output destination (a file like 'outfile') or cout, or maybe a log, and prints the given log. 
+		Will try using threads and parallelism to allow traversion of tree to try to efficiently print words
+	*/
+	//void printWordOut(ostream outputStream, string targetWord); 
+
+
+
 
 	//TODO Possibly hold a directory path to a file where dictionary is writen/read. Initially, set to curren local path with name like 'tempTries.dic', and will require new name when saving
 	//If reading in a file, this path will update to that file path.
@@ -65,6 +103,10 @@ public:
 	bool loadDictionary(string filePath);
 	bool saveDictionary(); //Saves to current filepath. If no filepath, prompts user for file name and path
 	bool saveDictionaryAs(string fileName, string filePath);
+
+	//These will output the Tries to console, instead of saving to file
+	bool printDictionary();
+	bool printInOrderDictionary();
 
 
 	//TODO like in TriesNode, consider changing to returning a TriesNode so that further information can be updated, or additional features can be edited with that node

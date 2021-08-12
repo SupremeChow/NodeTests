@@ -51,6 +51,33 @@ bool Tries::processDictionary()
 	return true;
 }
 
+
+
+
+
+
+
+/**
+	Helper function for printing words. Will make use of Mutex printMutex to handle multi-threading when printing out
+	@param outputStream A given ouput point where the given word is printed to, either a file (outfile) or the console
+	@param targetWord The word to be printed to the outputStream. Word will be derived from parallel threads calling this function
+*/
+
+
+
+/*  Hold off...
+void Tries::printWordOut(ostream outputStream, string targetWord)
+{
+	printMutex.lock();
+	outputStream << targetWord;
+	printMutex.unlock();
+}
+
+
+*/
+
+
+
 Tries::Tries()
 {
 	root.reset(new TriesNode());
@@ -101,8 +128,45 @@ bool Tries::loadDictionary(string filePath)
 	return true;
 }
 
+
+
+
+
+
+/*
+	Default save to file, using outFile
+
+	Creates a PrintFunctor with buffer to outFile, the calls root node's printWord(printFunctor, currentWord = ""),
+	which recursively calls functor to print currentWord + currentChar (if isWord), the creates a group of threads to recursively
+	do same thing for each mapped nect letter.
+
+*/
+
 bool Tries::saveDictionary()
 {
+	//TODO figure out system for tracking file, current way may be incorrect since it may require constant open and closing, which removes path directory
+
+	bool isOpen;
+	isOpen = outfile.is_open();
+
+	if (isOpen)
+	{
+		//move to beggining of file and overwrite (?)
+	}
+	else
+	{
+		//TODO figure how to handle, for now just save to dummy file
+		outfile.open("tempOutDict.txt");
+
+
+		//VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+		PrintFunctor* printOut = new PrintFunctor(outfile);
+
+		root->printWord(*printOut, "");
+
+
+	}
+
 	return false;
 }
 
@@ -110,6 +174,12 @@ bool Tries::saveDictionaryAs(string fileName, string filePath)
 {
 	return false;
 }
+
+
+
+
+
+
 
 bool Tries::insertWord(string newWord)
 {

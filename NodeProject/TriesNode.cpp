@@ -164,9 +164,6 @@ TriesNode* TriesNode::findWord(string targetWord)
 
 
 
-//TODO 8/4/2021      VVVVVVVVVVVVVVVV Fix This, this is having some issues....
-
-
 
 /**
 	Recursively call findWord(), trying to find terminal point where at the end of targetWord, and current TriesNode's isWord == true.
@@ -191,6 +188,7 @@ TriesNode* TriesNode::findWord(string targetWord, int posInString)
 	//Otherwise, itterate posInString, and recrusively call findWord in the next TriesNode
 	else
 		return nextChar[targetWord[posInString]]->findWord(targetWord, posInString+1);
+
 
 	/*
 	//Terminal Case, ned of targetWord, and current TriesNode is a word
@@ -221,6 +219,51 @@ bool TriesNode::deleteWord(string targetWord)
 	pruneBranch(foundWord, NULL); //TODO, check if okay for char should be NULL, indicating end of string
 
 	return true;
+
+
+}
+
+void TriesNode::printWord(PrintFunctor& printOutput, string currentWord)
+{
+	if (currentChar != NULL) //don't add if root
+	{
+		currentWord += currentChar;
+	}
+
+
+	//TODO decide if print first, then thread children, or opposite. Printing first could make this thread wait, thus delay threading
+	//However, calling children thread first may start parralellism, but now children may increase potential wait (also, if ordered mattered, could potentially print really out of order)
+	if (isWord)
+	{
+		//
+		printOutput(currentWord);
+	}
+
+	//if child words, create threads of each nextChar to recursively call printWord
+	if (nextChar.size() != 0)
+	{
+		//TODO maybe redundant
+		vector<thread> childThreads;
+
+
+		for (map<char, unique_ptr<TriesNode>>::iterator iter = nextChar.begin(); iter != nextChar.end(); iter++)
+		{
+			childThreads.push_back(thread(&printWord,iter->second, printOutput, currentWord));
+			
+		}
+
+		//Join threads
+		//NOTE, may cause long hang ups with this thread which may take up clock time. However, detatching threads will free this parent thread, but there is no gauruentee or
+		//way of knowing when this recursive call is complete. It's possible that a significantly large tire could be continuing to run in the background and not know when we try to do other things
+
+		for (int i = 0; i < childThreads.size(); i++)
+		{
+			childThreads[i].join();
+		}
+	}
+	
+	
+
 
 
 }

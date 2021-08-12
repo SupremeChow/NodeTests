@@ -16,8 +16,12 @@ Header file for the class that will be the node for a Tries data structure. Used
 
 #include <map>
 #include <string>
+#include <vector>
 
 #include <memory> //For smart pointers, something new
+
+#include "PrintFunctor.h" //for printing to stream
+#include <thread> //for threaded process of printing children
 
 using namespace std;
 
@@ -57,5 +61,8 @@ public:
 	TriesNode* findWord(string targetWord); //Parent function of findWord(), implicitly starts search from beginning of targetWrod
 	TriesNode* findWord(string targetWord, int posInString); //Different from isWord. Will return the node (if any) of a valid word. This allows for getting info on the word (ie. definition, synoyms, etc) or editing like delete.
 	bool deleteWord(string targetWord);
+
+	//Print function, which will implement threads to recursively print children
+	void printWord(PrintFunctor& printOutput, string currentWord = "");
 };
 
