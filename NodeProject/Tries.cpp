@@ -152,6 +152,8 @@ bool Tries::saveDictionary()
 	if (isOpen)
 	{
 		//move to beggining of file and overwrite (?)
+
+		//TODO for now, return false, don't write out to already open file which should be closed
 	}
 	else
 	{
@@ -159,15 +161,17 @@ bool Tries::saveDictionary()
 		outfile.open("tempOutDict.txt");
 
 
-		//VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
 		PrintFunctor* printOut = new PrintFunctor(outfile);
 
-		root->printWord(*printOut, "");
+		root->printWord(*printOut);
+
+		delete printOut;
 
 
 	}
+	outfile.close();
 
-	return false;
+	return true;
 }
 
 bool Tries::saveDictionaryAs(string fileName, string filePath)

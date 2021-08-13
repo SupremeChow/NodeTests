@@ -223,6 +223,8 @@ bool TriesNode::deleteWord(string targetWord)
 
 }
 
+
+
 void TriesNode::printWord(PrintFunctor& printOutput, string currentWord)
 {
 	if (currentChar != NULL) //don't add if root
@@ -236,19 +238,20 @@ void TriesNode::printWord(PrintFunctor& printOutput, string currentWord)
 	if (isWord)
 	{
 		//
-		printOutput(currentWord);
+		(printOutput)(currentWord);
 	}
 
 	//if child words, create threads of each nextChar to recursively call printWord
 	if (nextChar.size() != 0)
 	{
-		//TODO maybe redundant
 		vector<thread> childThreads;
+
+
 
 
 		for (map<char, unique_ptr<TriesNode>>::iterator iter = nextChar.begin(); iter != nextChar.end(); iter++)
 		{
-			childThreads.push_back(thread(&printWord,iter->second, printOutput, currentWord));
+			childThreads.push_back(thread(&TriesNode::printWord,iter->second.get(), ref(printOutput), currentWord));
 			
 		}
 

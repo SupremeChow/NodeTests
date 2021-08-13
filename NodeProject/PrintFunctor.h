@@ -25,7 +25,7 @@ public:
 	//											 _isstd (?) --> v 
 	//PrintFunctor() : printMutex(), outputStream(cout.rdbuf, false) {};
 
-	PrintFunctor() : printMutex(), outputStream(cout.rdbuf) {};
+	PrintFunctor() : printMutex(), outputStream(cout.rdbuf()) {};
 	/*
 	PrintFunctor(ostream& newOutputStream = cout)
 	{
@@ -34,7 +34,7 @@ public:
 	};
 	*/
 
-	PrintFunctor(ostream newOutputStream) : printMutex(), outputStream(newOutputStream.rdbuf) {};
+	PrintFunctor(ostream& newOutputStream) : printMutex(), outputStream(newOutputStream.rdbuf()) {};
 
 	void operator ()(string printWord)
 	{

@@ -126,6 +126,14 @@ int main()
 
 
 
+	//Printout test, to file....
+
+	testTries->saveDictionary(); //NOTE: need to check file....
+
+
+
+
+
 
 	//BinaryTreeTest::mainTest(5, 100);
 
