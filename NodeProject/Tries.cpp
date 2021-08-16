@@ -3,6 +3,17 @@
 using namespace std;
 
 
+
+
+
+/****************************** PRIVATE **********************************************************************************************/
+
+
+
+
+
+
+
 /*   Hold off on this, sending an ifstream may be redundant
 bool Tries::processDictionary(const ifstream& infile)
 {
@@ -78,14 +89,40 @@ void Tries::printWordOut(ostream outputStream, string targetWord)
 
 
 
+
+
+
+
+
+
+
+/******************************			Public		 **********************************************************************************************/
+
+
+
+
+
+
+
+
+/*******     Cosntructors	********/
+
+
 Tries::Tries()
 {
 	root.reset(new TriesNode());
+	isUpdated = false;
+	workingFilePath = "";
 }
 
 Tries::Tries(string filePath)
 {
+	isUpdated = false;
+	workingFilePath = "";
+
 	root.reset(new TriesNode());
+
+
 	bool isOpen;
 	infile.open(filePath);
 	isOpen = infile.is_open();
@@ -96,10 +133,38 @@ Tries::Tries(string filePath)
 	}
 	else
 	{
-		processDictionary(); //TODO in future, implement return boolean which would idicate errors in parsing/format, which would require either creating an empty Tries, or quiting
+
+		bool successfulLoad = processDictionary(); //TODO in future, implement return boolean which would idicate errors in parsing/format, which would require either creating an empty Tries, or quiting
+
+		if (successfulLoad)
+		{
+				workingFilePath = filePath;
+		}
+		else
+		{
+			//Some sort of issue with the loading file, keep what's loaded but don't assign to the given file
+			cout << "WARNING! Input dictionary did not load correctly, this Tries structure will not reference the given file...\n";
+		}
+
+		infile.close();
+
 	}
 
+
+
 }
+
+
+
+
+
+
+
+
+
+/*******     Load/Save	********/
+
+
 
 bool Tries::loadDictionary(string filePath)
 {
@@ -121,7 +186,30 @@ bool Tries::loadDictionary(string filePath)
 	}
 	else
 	{
-		processDictionary(); //TODO in future, implement return boolean which would idicate errors in parsing/format, which would require either creating an empty Tries, or quiting
+		
+		bool successfulLoad = processDictionary(); //TODO in future, implement return boolean which would idicate errors in parsing/format, which would require either creating an empty Tries, or quiting
+
+		if (successfulLoad)
+		{
+			if (workingFilePath == "")
+			{
+				workingFilePath = filePath;
+			}
+			else
+				isUpdated = true;
+			
+		}
+		else
+		{
+			if (workingFilePath == "")
+			{
+				//Do nothing, if there was some issue when loading, best to not have possiblity to save to file that was source of issue 
+			}
+			else
+				isUpdated = true;
+		}
+
+		infile.close();
 	}
 
 
@@ -134,7 +222,7 @@ bool Tries::loadDictionary(string filePath)
 
 
 /*
-	Default save to file, using outFile
+	Default save to file, using workingFilePath
 
 	Creates a PrintFunctor with buffer to outFile, the calls root node's printWord(printFunctor, currentWord = ""),
 	which recursively calls functor to print currentWord + currentChar (if isWord), the creates a group of threads to recursively
@@ -144,43 +232,129 @@ bool Tries::loadDictionary(string filePath)
 
 bool Tries::saveDictionary()
 {
-	//TODO figure out system for tracking file, current way may be incorrect since it may require constant open and closing, which removes path directory
+	
+
+	//Check if there is currently a workingFilePath
+	if (workingFilePath == "")
+	{
+
+		//TODO Ideally, prompt user (typically in GUI with OS save file feature) for name of file and location to save. For now,
+		//COUT to prompt user for name, and save to cwd (Won't error check validity of name for now...)
+
+		cout << "WARNING! No active working file path. Please provide a valid file name... \n";
+
+		string tempFilePathName;
+		getline(cin, tempFilePathName);
+		tempFilePathName += ".txt";
+
+		workingFilePath = tempFilePathName;
+	}
+
+
 
 	bool isOpen;
 	isOpen = outfile.is_open();
 
 	if (isOpen)
 	{
-		//move to beggining of file and overwrite (?)
+		cout << "WARNING! Outfile already opened, closing to write out dictionary for current workingFilePath \n";
+		outfile.close();
+	}
 
-		//TODO for now, return false, don't write out to already open file which should be closed
+
+	outfile.open(workingFilePath);
+	isOpen = outfile.is_open();
+	if (!isOpen)
+	{
+		cout << "ERROR Issue opening file for writing out, exiting out...\n";
+		return false;
+
 	}
 	else
 	{
-		//TODO figure how to handle, for now just save to dummy file
-		outfile.open("tempOutDict.txt");
-
-
 		PrintFunctor* printOut = new PrintFunctor(outfile);
 
 		root->printWord(*printOut);
 
+
+		//NOTE: Because TriesNode::printWord() calls recursive threads and joins with the child threads, the root call will waith until children are finished, thus freeing printOut and allowing the program to close the outfile
+
 		delete printOut;
 
 
-	}
-	outfile.close();
+		outfile.close();
 
-	return true;
+		return true;
+	}
+
+	
 }
+
+
+bool Tries::saveDictionaryAs(string fileName)
+{
+	workingFilePath = fileName;
+
+	bool isOpen;
+	isOpen = outfile.is_open();
+
+	if (isOpen)
+	{
+		cout << "WARNING! Outfile already opened, closing to write out dictionary for current workingFilePath \n";
+		outfile.close();
+	}
+
+	outfile.open(workingFilePath);
+	isOpen = outfile.is_open();
+
+	if (!isOpen)
+	{
+		cout << "ERROR Cannot open file for writing out, exiting out...\n";
+		return false;
+
+	}
+	else
+	{
+		PrintFunctor* printOut = new PrintFunctor(outfile);
+
+		root->printWord(*printOut);
+
+
+		//NOTE: Because TriesNode::printWord() calls recursive threads and joins with the child threads, the root call will waith until children are finished, thus freeing printOut and allowing the program to close the outfile
+
+		delete printOut;
+
+
+		outfile.close();
+
+		return true;
+	}
+
+	
+
+
+}
+
+
+//TODO Hold off on this, may need to implement a better file system library for actually dealing with paths and filenames...
 
 bool Tries::saveDictionaryAs(string fileName, string filePath)
 {
+	cout << "WARNING!! saveDictionaryAs() with a path structure not implemented yet. (Try using only filename inntead...)\n";
 	return false;
 }
 
 
 
+
+
+
+
+
+
+
+
+/*******     Word Processing	********/
 
 
 

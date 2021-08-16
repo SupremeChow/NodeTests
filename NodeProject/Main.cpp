@@ -134,6 +134,20 @@ int main()
 
 
 
+	//Add some more words, and save to a specific file destination
+
+	testTries->insertWord("OhioGoZaiMas");
+	testTries->insertWord("Poggers");
+	testTries->insertWord("tabemono");
+
+	testTries->saveDictionaryAs("specificDict.txt");
+
+	
+
+
+
+
+
 
 	//BinaryTreeTest::mainTest(5, 100);
 

@@ -60,6 +60,9 @@ private:
 	ifstream infile;
 	ofstream outfile;
 
+	string workingFilePath; //Use instead of infile
+	bool isUpdated; //Determines if the Tries structure has changed, thus warranting a save to file
+
 	
 
 	//TODO the infile reference may be redundant, since infile is already used. Hold off on this
@@ -102,7 +105,11 @@ public:
 
 	bool loadDictionary(string filePath);
 	bool saveDictionary(); //Saves to current filepath. If no filepath, prompts user for file name and path
+	bool saveDictionaryAs(string fileName); //TODO use for now, which saves the file to current working directory
+
+	//TODO hold off on this, handling directory and such needs some more effort
 	bool saveDictionaryAs(string fileName, string filePath);
+	
 
 	//These will output the Tries to console, instead of saving to file
 	bool printDictionary();
