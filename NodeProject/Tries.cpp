@@ -349,6 +349,49 @@ bool Tries::saveDictionaryAs(string fileName, string filePath)
 
 
 
+//Prints to console, using parallel threads to output (Does not guarntee order)
+bool Tries::printDictionary()
+{
+	PrintFunctor* printOut = new PrintFunctor(cout);
+
+	root->printWord(*printOut);
+
+
+	//NOTE: Because TriesNode::printWord() calls recursive threads and joins with the child threads, the root call will waith until children are finished, thus freeing printOut and allowing the program to close the outfile
+
+	delete printOut;
+
+	return true;
+}
+
+
+
+
+
+
+//Because the words need to be in alphabetical order, the use of parrallel threads is tricky
+//Rather than have each word itself call on the functor PrintFunctor, the program will have each branch in the Tries
+//return a linked list, consisting of:
+//the current word (if is word), a list of all words of the first child, a list of all words of second....etc
+//The parallelism comes from having each child call be it's own thread (or in this case, a future async call), thus having the children work
+//simultaneously to build a list, then merge them in order with the calling root.
+bool Tries::printInOrderDictionary()
+{
+	list<string>* listAllWordsOrdered = root->getAllWords("");
+	for (auto iter : *listAllWordsOrdered)
+	{
+		cout << iter << "\n";
+	}
+
+	delete listAllWordsOrdered;
+	return true;
+}
+
+
+
+
+
+
 
 
 

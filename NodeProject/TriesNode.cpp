@@ -270,3 +270,44 @@ void TriesNode::printWord(PrintFunctor& printOutput, string currentWord)
 
 
 }
+
+
+
+//From the calling node, returns a list of all possible words(*) made of the root node and the combination of children
+//Makes use of parallell calls to children so that children list can be made simultaneously, then linked together at the end
+//*Note, because this function can be initially called from Non-root nodes, the resulting words may actually be sans-prefix.
+//i.e. words like preamp, prenup, pretend,..., where the getAllWords is called at the node AFTER "pre" will result in
+//amp, nup, tend ...etc. 
+list<string>* TriesNode::getAllWords(string currentWord)
+{
+	list<string>* returnList = new list<string>();
+	if (currentChar != NULL)
+		currentWord += currentChar;
+
+	if (isWord)
+		returnList->push_back(currentWord);
+	if (nextChar.size() != 0)
+	{
+		vector<future<list<string>*>> childLists;
+		for (map<char, unique_ptr<TriesNode>>::iterator iter = nextChar.begin(); iter != nextChar.end(); iter++)
+		{
+			//For each child of current Node, make them asyncrously make their own list of words
+			childLists.push_back( async(&TriesNode::getAllWords, iter->second.get(), currentWord) );
+		}
+
+		//Merge child lists back into returnList
+
+		for (int i = 0; i < childLists.size(); i++)
+		{
+
+
+
+			//                                         VVVVVVVVVVVVVV
+			returnList->splice(returnList->end(), *(childLists[i].get()) );
+		}
+
+	}
+
+
+	return returnList;
+}

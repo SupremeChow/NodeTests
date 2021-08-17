@@ -19,6 +19,7 @@ For example, thgis class can track the ammount of words in the Tries, assign def
 
 //*****************************************
 #include <string>
+#include <list>
 
 //*****************************************
 

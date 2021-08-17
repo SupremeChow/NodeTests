@@ -17,11 +17,13 @@ Header file for the class that will be the node for a Tries data structure. Used
 #include <map>
 #include <string>
 #include <vector>
+#include <list>
 
 #include <memory> //For smart pointers, something new
 
 #include "PrintFunctor.h" //for printing to stream
 #include <thread> //for threaded process of printing children
+#include <future> //For async creation of list of child words in order
 
 using namespace std;
 
@@ -64,5 +66,7 @@ public:
 
 	//Print function, which will implement threads to recursively print children
 	void printWord(PrintFunctor& printOutput, string currentWord = "");
+
+	list<string>* getAllWords(string currentWord);
 };
 

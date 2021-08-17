@@ -32,6 +32,9 @@ int main()
 	testTries->insertWord("Alphalphe");
 	testTries->insertWord("Temple");
 
+
+
+
 	if (testTries->isWord("A"))
 		cout << "A is a word \n";
 	else
@@ -143,6 +146,31 @@ int main()
 	testTries->saveDictionaryAs("specificDict.txt");
 
 	
+
+
+
+	//Now trying printDictionary to console
+	cout << "\n\n";
+	cout << "Testing printDictionary()\n\n";
+
+	testTries->printDictionary();
+
+
+
+	
+	//Now Trying PrintInOrderDictionary
+	cout << "\n\n";
+	cout << "Testing printInOrderDictionary()\n\n";
+	testTries->printInOrderDictionary();
+
+
+
+
+
+
+
+
+
 
 
 
